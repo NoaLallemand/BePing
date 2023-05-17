@@ -82,14 +82,14 @@ public class Rencontre {
 
     public static void main(String Args[])
     {
-        Equipe equipeLocaux = new Equipe(1, "Dalhem Pong", 1, "Liège", "D3");
+        /*Equipe equipeLocaux = new Equipe(1, "Dalhem Pong", 1, "Liège", "D3");
         Equipe equipeVisiteurs = new Equipe(2, "Liège Pong", 2, "Liège", "D1");
 
         Joueur[] joueursLocaux = new Joueur[4];
         joueursLocaux[0] = new Joueur("03.06.23-335.79", "Lallemand", "Noa",
                 new Date(2003, 6, 23), "Rue Félix Delhaes 45C, 4607 Dalhem", "H", "C2", 4);
         joueursLocaux[1] = new Joueur("01.02.12-175.25", "Garcia", "Adrian",
-                new Date(2001, 2, 12), "Rue du marché, 4020 Liège", "H", "C1", 2);
+                new Date(2001, 2, 12), "Rue du marché, 4020 Liège", "H", "C1", 2);*/
 
         //Rencontre premiereRencontre = new Rencontre(equipeLocaux, equipeVisiteurs, joueursLocaux, , new ResultatMatch(2, 0),
                 //new Date(2023, 4, 22, 18, 0), new Date(2023, 4, 22, 20, 0));

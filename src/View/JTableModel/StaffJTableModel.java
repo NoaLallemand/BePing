@@ -1,6 +1,8 @@
 package View.JTableModel;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+
 import Model.Staff;
 
 import java.util.ArrayList;
@@ -52,6 +54,13 @@ public class StaffJTableModel extends AbstractTableModel
             default:
                 return null;
         }
+    }
+
+    @Override
+    public void setValueAt(Object value, int row, int col)
+    {
+        super.setValueAt(value, row, col);
+        fireTableDataChanged();
     }
 
     @Override

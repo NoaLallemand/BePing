@@ -22,10 +22,18 @@ public class Joueur extends Personne{
         return listeForce;
     }
 
-    public Joueur(String numRegistreNational, String nom, String prenom, Date dateNaissance, String adresse, String sexe, String classement, int listeForce) {
+    public Joueur(String numRegistreNational, String nom, String prenom, Date dateNaissance, String adresse, String sexe, String classement, int listeForce) throws Exception
+    {
         super(numRegistreNational, nom, prenom, dateNaissance, adresse, sexe);
-        setClassement(classement);
-        setListeForce(listeForce);
+        try
+        {
+            setClassement(classement);
+            setListeForce(listeForce);
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
     }
 
     @Override
@@ -47,9 +55,9 @@ public class Joueur extends Personne{
 
     public static void main(String Args[])
     {
-        Joueur monJoueur = new Joueur("03.06.23-335.79", "Lallemand", "Noa",
-                                        new Date(2003, 6, 23), "Rue Félix Delhaes 45C, 4607 Dalhem",
-                                        "H", "D1", 8);
-        System.out.println(monJoueur.toString());
+        //Joueur monJoueur = new Joueur("03.06.23-335.79", "Lallemand", "Noa",
+                                        //new Date(2003, 6, 23), "Rue Félix Delhaes 45C, 4607 Dalhem",
+                                        //"H", "D1", 8);
+        //System.out.println(monJoueur.toString());
     }
 }

@@ -38,7 +38,7 @@ public class ViewMembres
 
     public ViewMembres()
     {
-        setTableModelForTableStaff();
+
     }
 
     public JPanel getMembresPanel() { return MembresPanel; }
@@ -65,7 +65,11 @@ public class ViewMembres
     public void setTableModelForTableStaff()
     {
         StaffJTableModel staffTableModel = new StaffJTableModel(Club.getClubInstance().getListeStaffClub());
-        tableStaff.setModel(staffTableModel);
+        tableStaff = new JTable(staffTableModel);
+        tableStaff.setValueAt("Noa", 0, 0);
+        tableStaff.setValueAt("Lallemand", 0, 1);
+        tableStaff.setValueAt("23/06/2003", 0, 2);
+        //tableStaff.setModel(staffTableModel);
     }
 
     public static void main(String[] args) {
@@ -74,5 +78,10 @@ public class ViewMembres
         frame.setContentPane(v.MembresPanel);
         frame.setSize(1920, 1080);
         frame.setVisible(true);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        setTableModelForTableStaff();
     }
 }

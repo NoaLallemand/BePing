@@ -4,8 +4,10 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+import java.lang.Exception;
 
-public class Personne {
+public class Personne
+{
     protected String numRegistreNational;
     protected String nom;
     protected String prenom;
@@ -13,13 +15,22 @@ public class Personne {
     protected String adresse;
     protected String sexe;
 
-    public Personne(String numRegistreNational, String nom, String prenom, Date dateNaissance, String adresse, String sexe) {
-        setNumRegistreNational(numRegistreNational);
-        setNom(nom);
-        setPrenom(prenom);
-        setDateNaissance(dateNaissance);
-        setAdresse(adresse);
-        setSexe(sexe);
+    public Personne(String numRegistreNational, String nom, String prenom, Date dateNaissance, String adresse, String sexe) throws Exception
+    {
+        try
+        {
+            setNumRegistreNational(numRegistreNational);
+            setNom(nom);
+            setPrenom(prenom);
+            setDateNaissance(dateNaissance);
+            setAdresse(adresse);
+            setSexe(sexe);
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+
     }
 
 
@@ -35,16 +46,24 @@ public class Personne {
         return nom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNom(String nom) throws Exception
+    {
+        if(nom.length() > 0)
+            this.nom = nom;
+        else
+            throw new Exception("Veuillez renseigner le nom de la personne!");
     }
 
     public String getPrenom() {
         return prenom;
     }
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
+    public void setPrenom(String prenom) throws Exception
+    {
+        if(prenom.length() > 0)
+            this.prenom = prenom;
+        else
+            throw new Exception("Veuillez renseigner le prénom de la personne!");
     }
 
     public Date getDateNaissance() {
@@ -59,17 +78,19 @@ public class Personne {
         return adresse;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setAdresse(String adresse) throws Exception
+    {
+        if(adresse.length() > 0)
+            this.adresse = adresse;
+        else
+            throw new Exception("Veuillez renseigner l'adresse de la personne!");
     }
 
     public String getSexe() {
         return sexe;
     }
 
-    public void setSexe(String sexe) {
-        this.sexe = sexe;
-    }
+    public void setSexe(String sexe) {this.sexe = sexe; }
 
     @Override
     public String toString() {
@@ -94,7 +115,7 @@ public class Personne {
 
     public static void main(String Args[])
     {
-        Personne maPersonne = new Personne("Be03030210","Noa","Lalleman",new Date(2003,03,20),"Marveld,155","Homme");
-        System.out.println(maPersonne.toString());
+        //Personne maPersonne = new Personne("Be03030210","Noa","Lalleman",new Date(2003,03,20),"Marveld,155","Homme");
+        //System.out.println(maPersonne.toString());
     }
 }

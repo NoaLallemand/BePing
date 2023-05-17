@@ -7,7 +7,7 @@ public class Staff extends Personne
 {
     private String role;
 
-    public Staff(String numRegNat, String nom, String prenom, Date dateNais, String adresse, String sexe, String role)
+    public Staff(String numRegNat, String nom, String prenom, Date dateNais, String adresse, String sexe, String role) throws Exception
     {
         super(numRegNat, nom, prenom, dateNais, adresse, sexe);
         setRole(role);

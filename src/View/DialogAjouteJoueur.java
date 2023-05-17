@@ -14,10 +14,13 @@ public class DialogAjouteJoueur extends JDialog
     private JTextField textField8;
     private JButton ajouterButton;
     private JButton annulerButton;
-    private JPanel DialogAjouteJoueurPanel;
+    private JPanel mainPanel;
 
     public DialogAjouteJoueur(JFrame parent, boolean modal)
     {
         super(parent, modal);
+        setContentPane(mainPanel);
+        setSize(400, 480);
+        setVisible(true);
     }
 }
