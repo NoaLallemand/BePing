@@ -52,7 +52,7 @@ public class MainView extends JFrame
         menuItemEquipes.addActionListener(c);
 
         fenetreMembres.setControleur(c);
-        //fenetreEquipes.setControleur(c);
+        fenetreEquipes.setControleur(c);
     }
 
     public void changeSelectedView(JPanel panel)

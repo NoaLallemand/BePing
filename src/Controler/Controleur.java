@@ -35,6 +35,11 @@ public class Controleur implements ActionListener
             d.dispose();
         }
 
+        if(e.getSource() == mainView.getViewEquipes().getBtnAjouterEquipe())
+        {
+            onNouvelleEquipe();
+        }
+
 
     }
 
@@ -87,5 +92,9 @@ public class Controleur implements ActionListener
             }
         }
         d.dispose();
+    }
+    public void onNouvelleEquipe()
+    {
+        DialogAjouteEquipe d = new DialogAjouteEquipe(mainView,true);
     }
 }
