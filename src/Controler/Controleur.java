@@ -25,22 +25,18 @@ public class Controleur implements ActionListener
             mainView.changeSelectedView(mainView.getViewEquipes().getEquipesPanel());
         }
 
+
         if(e.getSource() == mainView.getViewMembres().getBtnAjouterStaff()) {
             onNouveauStaff();
         }
 
-        if(e.getSource() == mainView.getViewMembres().getBtnAjouterJoueur())
-        {
-            DialogAjouteJoueur d = new DialogAjouteJoueur(mainView, true);
-            d.dispose();
+        if(e.getSource() == mainView.getViewMembres().getBtnAjouterJoueur()) {
+            onNouveauJoueur();
         }
 
-        if(e.getSource() == mainView.getViewEquipes().getBtnAjouterEquipe())
-        {
+        if(e.getSource() == mainView.getViewEquipes().getBtnAjouterEquipe()) {
             onNouvelleEquipe();
         }
-
-
     }
 
     public Controleur(MainView v, Club c)
@@ -88,6 +84,55 @@ public class Controleur implements ActionListener
 
                     case 6:
                         t.setValueAt(s.getRole(), t.getRowCount()-1, i);
+                }
+            }
+        }
+        d.dispose();
+    }
+
+    public void onNouveauJoueur()
+    {
+        DialogAjouteJoueur d = new DialogAjouteJoueur(mainView, true);
+        if(d.isOk())
+        {
+            Joueur j = d.getNouveauJoueur();
+            singleton.getListeJoueursClub().add(j);
+
+            JTable t = mainView.getViewMembres().getTableJoueurs();
+            for(int i=0; i<7; i++)
+            {
+                switch(i)
+                {
+                    case 0:
+                        t.setValueAt(j.getNumRegistreNational(), t.getRowCount()-1, i);
+                        break;
+
+                    case 1:
+                        t.setValueAt(j.getNom(), t.getRowCount()-1, i);
+                        break;
+
+                    case 2:
+                        t.setValueAt(j.getPrenom(), t.getRowCount()-1, i);
+                        break;
+
+                    case 3:
+                        t.setValueAt(j.getDateNaissance(), t.getRowCount()-1, i);
+                        break;
+
+                    case 4:
+                        t.setValueAt(j.getAdresse(), t.getRowCount()-1, i);
+                        break;
+
+                    case 5:
+                        t.setValueAt(j.getSexe(), t.getRowCount()-1, i);
+                        break;
+
+                    case 6:
+                        t.setValueAt(j.getClassement(), t.getRowCount()-1, i);
+                        break;
+
+                    case 7:
+                        t.setValueAt(j.getListeForce(), t.getRowCount()-1, i);
                 }
             }
         }

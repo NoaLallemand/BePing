@@ -10,6 +10,7 @@ import java.util.Vector;
 import Controler.Controleur;
 import Model.Club;
 import Model.Staff;
+import View.JTableModel.JoueursJTableModel;
 import View.JTableModel.StaffJTableModel;
 
 public class ViewMembres
@@ -44,6 +45,7 @@ public class ViewMembres
     public JPanel getMembresPanel() { return MembresPanel; }
 
     public JTable getTableStaff() { return tableStaff; }
+    public JTable getTableJoueurs() { return tableJoueurs; }
 
     public JButton getBtnAjouterJoueur() { return ajouterJoueurButton; }
     public JButton getBtnModifierJoueur() { return modifierJoueurButton; }
@@ -66,10 +68,12 @@ public class ViewMembres
     {
         StaffJTableModel staffTableModel = new StaffJTableModel(Club.getClubInstance().getListeStaffClub());
         tableStaff = new JTable(staffTableModel);
-        tableStaff.setValueAt("Noa", 0, 0);
-        tableStaff.setValueAt("Lallemand", 0, 1);
-        tableStaff.setValueAt("23/06/2003", 0, 2);
-        //tableStaff.setModel(staffTableModel);
+    }
+
+    public void setTableModelForTableJoueurs()
+    {
+        JoueursJTableModel joueursTableModel = new JoueursJTableModel(Club.getClubInstance().getListeJoueursClub());
+        tableJoueurs = new JTable(joueursTableModel);
     }
 
     public static void main(String[] args) {
@@ -83,5 +87,6 @@ public class ViewMembres
     private void createUIComponents() {
         // TODO: place custom component creation code here
         setTableModelForTableStaff();
+        setTableModelForTableJoueurs();
     }
 }

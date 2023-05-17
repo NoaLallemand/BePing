@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import Model.*;
 
@@ -15,18 +16,19 @@ public class DialogAjouteStaff extends JDialog
     private JTextField textField_DateNais;
     private JTextField textField_NumRegNat;
     private JTextField textField_Adresse;
-    private JTextField textField_Sexe;
+    private JComboBox cbBox_Sexe;
+    private JComboBox cbBox_RoleClub;
 
     private JButton ajouterButton;
     private JButton annulerButton;
-    private JComboBox cbBox_RoleClub;
     private JPanel mainPanel;
+
 
 
     private String nom;
     private String prenom;
     private String numRegNat;
-    private Date dateNais;
+    private GregorianCalendar dateNais;
     private String adresse;
     private String sexe;
     private String role;
@@ -49,6 +51,11 @@ public class DialogAjouteStaff extends JDialog
         cbBox_RoleClub.addItem("Kiné");
         cbBox_RoleClub.addItem("Diététicien");
 
+        cbBox_Sexe.addItem("Homme");
+        cbBox_Sexe.addItem("Femme");
+
+        dateNais = new GregorianCalendar();
+
         ajouterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,8 +65,9 @@ public class DialogAjouteStaff extends JDialog
 
                 try
                 {
-                    DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.FRANCE);
-                    dateNais = df.parse(textField_DateNais.getText());
+                    DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE);
+                    Date d = df.parse(textField_DateNais.getText());
+                    dateNais.setTime(d);
                 }
                 catch(ParseException exception)
                 {
@@ -68,7 +76,7 @@ public class DialogAjouteStaff extends JDialog
                 }
 
                 adresse = textField_Adresse.getText();
-                sexe = textField_Sexe.getText();
+                sexe = (String)cbBox_Sexe.getSelectedItem();
                 role = (String)cbBox_RoleClub.getSelectedItem();
 
                 try
@@ -90,6 +98,8 @@ public class DialogAjouteStaff extends JDialog
                 setVisible(false);
             }
         });
+
+
         setVisible(true);
     }
 

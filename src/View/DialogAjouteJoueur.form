@@ -34,7 +34,7 @@
               <text value="Nom"/>
             </properties>
           </component>
-          <component id="62257" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+          <component id="62257" class="javax.swing.JTextField" binding="textField_Nom">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -50,7 +50,7 @@
               <text value="Prénom"/>
             </properties>
           </component>
-          <component id="a44d0" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+          <component id="a44d0" class="javax.swing.JTextField" binding="textField_Prenom">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -66,7 +66,7 @@
               <text value="Date de naissance"/>
             </properties>
           </component>
-          <component id="50e68" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+          <component id="50e68" class="javax.swing.JTextField" binding="textField_DateNais">
             <constraints>
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -82,7 +82,7 @@
               <text value="Numéro registre national"/>
             </properties>
           </component>
-          <component id="171ca" class="javax.swing.JTextField" binding="textField4" default-binding="true">
+          <component id="171ca" class="javax.swing.JTextField" binding="textField_NumRegNat">
             <constraints>
               <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -108,7 +108,7 @@
               <text value="Adresse"/>
             </properties>
           </component>
-          <component id="ddc73" class="javax.swing.JTextField" binding="textField5" default-binding="true">
+          <component id="ddc73" class="javax.swing.JTextField" binding="textField_Adresse">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -124,14 +124,6 @@
               <text value="Sexe"/>
             </properties>
           </component>
-          <component id="b51d" class="javax.swing.JTextField" binding="textField6" default-binding="true">
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
           <component id="9a224" class="javax.swing.JLabel">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -139,14 +131,6 @@
             <properties>
               <text value="Classement"/>
             </properties>
-          </component>
-          <component id="2fc10" class="javax.swing.JTextField" binding="textField7" default-binding="true">
-            <constraints>
-              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
           </component>
           <component id="f4c7" class="javax.swing.JLabel">
             <constraints>
@@ -156,11 +140,23 @@
               <text value="Liste de force"/>
             </properties>
           </component>
-          <component id="401ed" class="javax.swing.JTextField" binding="textField8" default-binding="true">
+          <component id="401ed" class="javax.swing.JTextField" binding="textField_ListeForce">
             <constraints>
               <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="19fd2" class="javax.swing.JComboBox" binding="cbBox_Classement">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="e6227" class="javax.swing.JComboBox" binding="cbBox_Sexe">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
           </component>

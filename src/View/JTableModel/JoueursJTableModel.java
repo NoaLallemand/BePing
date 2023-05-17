@@ -1,15 +1,17 @@
 package View.JTableModel;
 
 import javax.swing.table.AbstractTableModel;
+import Model.Joueur;
 import Model.Staff;
+
 import java.util.ArrayList;
 
-public class StaffJTableModel extends AbstractTableModel
+public class JoueursJTableModel extends AbstractTableModel
 {
-    private String[] columnNames = {"Num. Registre National", "Nom", "Prénom", "Date de naissance", "Adresse", "Sexe", "Role"};
-    private ArrayList<Staff> data;
+    private String[] columnNames = {"Num. Registre National", "Nom", "Prénom", "Date de naissance", "Adresse", "Sexe", "Classement", "Liste force"};
+    private ArrayList<Joueur> data;
 
-    public StaffJTableModel(ArrayList<Staff> data)
+    public JoueursJTableModel(ArrayList<Joueur> data)
     {
         this.data = data;
     }
@@ -23,30 +25,33 @@ public class StaffJTableModel extends AbstractTableModel
     @Override
     public Object getValueAt(int l, int c)
     {
-        Staff s = data.get(l);
+        Joueur j = data.get(l);
 
         switch(c)
         {
             case 0:
-                return s.getNumRegistreNational();
+                return j.getNumRegistreNational();
 
             case 1:
-                return s.getNom();
+                return j.getNom();
 
             case 2:
-                return s.getPrenom();
+                return j.getPrenom();
 
             case 3:
-                return s.getDateNaissance();
+                return j.getDateNaissance();
 
             case 4:
-                return s.getAdresse();
+                return j.getAdresse();
 
             case 5:
-                return s.getSexe();
+                return j.getSexe();
 
             case 6:
-                return s.getRole();
+                return j.getClassement();
+
+            case 7:
+                return j.getListeForce();
 
             default:
                 return null;

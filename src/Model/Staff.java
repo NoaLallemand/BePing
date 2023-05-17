@@ -1,13 +1,14 @@
 package Model;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class Staff extends Personne
 {
     private String role;
 
-    public Staff(String numRegNat, String nom, String prenom, Date dateNais, String adresse, String sexe, String role) throws Exception
+    public Staff(String numRegNat, String nom, String prenom, GregorianCalendar dateNais, String adresse, String sexe, String role) throws Exception
     {
         super(numRegNat, nom, prenom, dateNais, adresse, sexe);
         setRole(role);

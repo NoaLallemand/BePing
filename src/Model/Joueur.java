@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class Joueur extends Personne{
@@ -22,7 +23,7 @@ public class Joueur extends Personne{
         return listeForce;
     }
 
-    public Joueur(String numRegistreNational, String nom, String prenom, Date dateNaissance, String adresse, String sexe, String classement, int listeForce) throws Exception
+    public Joueur(String numRegistreNational, String nom, String prenom, GregorianCalendar dateNaissance, String adresse, String sexe, String classement, int listeForce) throws Exception
     {
         super(numRegistreNational, nom, prenom, dateNaissance, adresse, sexe);
         try
