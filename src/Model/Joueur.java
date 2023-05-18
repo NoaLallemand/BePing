@@ -51,7 +51,7 @@ public class Joueur extends Personne{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Joueur joueur = (Joueur) o;
-        return listeForce == joueur.listeForce && Objects.equals(classement, joueur.classement);
+        return super.equals(joueur) && listeForce == joueur.listeForce && classement.equals(joueur.classement);
     }
 
     public static void main(String Args[])

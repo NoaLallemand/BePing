@@ -35,61 +35,21 @@ public class DialogAjouteJoueur extends JDialog
     private String classement;
     private int listeForce;
     private Joueur nouveauJoueur;
+    private Joueur donneesAncienJoueur;
 
     private boolean ok;
 
+    //Ce constructeur est utilisé lors de la création d'un nouveau joueur
     public DialogAjouteJoueur(JFrame parent, boolean modal)
     {
         super(parent, modal);
-        setContentPane(mainPanel);
-        setSize(400, 480);
-        ok = false;
-
-        for(int ascii=65; ascii<70; ascii++)
-        {
-            String lettre = Character.toString(ascii);
-            for(int j=0; j<8; j+=2)
-            {
-                String val = lettre + j;
-                cbBox_Classement.addItem(val);
-            }
-        }
-
-        cbBox_Sexe.addItem("Homme");
-        cbBox_Sexe.addItem("Femme");
-
-        dateNais = new GregorianCalendar();
+        this.chargeComposants();
 
         ajouterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                nom = textField_Nom.getText();
-                prenom = textField_Prenom.getText();
-                numRegNat = textField_NumRegNat.getText();
 
-                try
-                {
-                    DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE);
-                    Date d = df.parse(textField_DateNais.getText());
-                    dateNais.setTime(d);
-
-                    listeForce = Integer.parseInt(textField_ListeForce.getText());
-                }
-                catch(ParseException exception)
-                {
-                    JOptionPane.showMessageDialog(null, "Le format de la date saisie est invalide!", "Date invalide", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                catch(NumberFormatException exception)
-                {
-                    JOptionPane.showMessageDialog(null, "Le nombre entré pour la liste de force est invalide!", "Liste de force invalide", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                adresse = textField_Adresse.getText();
-                sexe = (String)cbBox_Sexe.getSelectedItem();
-                classement = (String)cbBox_Classement.getSelectedItem();
-
+                recupereContenuFormulaire();
                 try
                 {
                     nouveauJoueur = new Joueur(numRegNat, nom, prenom, dateNais, adresse, sexe, classement, listeForce);
@@ -109,6 +69,128 @@ public class DialogAjouteJoueur extends JDialog
         });
 
         setVisible(true);
+    }
+
+    //Ce constructeur est utilisé lors de la modification d'un joueur.
+    public DialogAjouteJoueur(JFrame parent, boolean modal, Joueur j, int selectedRow)
+    {
+        super(parent, modal);
+        chargeComposants();
+        donneesAncienJoueur = j;
+
+        textField_Nom.setText(j.getNom());
+        textField_Prenom.setText(j.getPrenom());
+        textField_NumRegNat.setText(j.getNumRegistreNational());
+        textField_Adresse.setText(j.getAdresse());
+
+        Date d = j.getDateNaissance().getTime();
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE);
+        String dateFormatee = df.format(d);
+        textField_DateNais.setText(dateFormatee);
+
+        String listeDeForce = Integer.toString(j.getListeForce());
+        textField_ListeForce.setText(listeDeForce);
+
+        if(j.getSexe().equals("Homme"))
+            cbBox_Sexe.setSelectedIndex(0);
+        else
+            cbBox_Sexe.setSelectedIndex(1);
+
+        boolean found = false;
+        String item;
+        for(int i=0; i<cbBox_Classement.getItemCount() && !found; i++)
+        {
+            item = (String)cbBox_Classement.getItemAt(i);
+            if(item.equals(j.getClassement()))
+            {
+                found = true;
+                cbBox_Classement.setSelectedIndex(i);
+            }
+        }
+
+        ajouterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                recupereContenuFormulaire();
+                try
+                {
+                    nouveauJoueur = new Joueur(numRegNat, nom, prenom, dateNais, adresse, sexe, classement, listeForce);
+                    if(nouveauJoueur.equals(donneesAncienJoueur))
+                    {
+                        throw new Exception("Modification impossible! Les nouvelles données du joueur sont identiques aux anciennes données...\nVeuillez modifier au moins un champ du joueur avant de confirmer la modification");
+                    }
+                    else
+                    {
+                        ok = true;
+                        setVisible(false);
+                    }
+                }
+                catch(Exception exception)
+                {
+                    JOptionPane.showMessageDialog(null,  exception.getMessage(), "Erreur lors de la modification du joueur", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        annulerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { setVisible(false); }
+        });
+
+        setVisible(true);
+    }
+
+    private void chargeComposants()
+    {
+        setContentPane(mainPanel);
+        setSize(400, 480);
+        ok = false;
+
+        for(int ascii=65; ascii<70; ascii++)
+        {
+            String lettre = Character.toString(ascii);
+            for(int j=0; j<8; j+=2)
+            {
+                String val = lettre + j;
+                cbBox_Classement.addItem(val);
+            }
+        }
+
+        cbBox_Sexe.addItem("Homme");
+        cbBox_Sexe.addItem("Femme");
+
+        dateNais = new GregorianCalendar();
+    }
+
+    private void recupereContenuFormulaire()
+    {
+        nom = textField_Nom.getText();
+        prenom = textField_Prenom.getText();
+        numRegNat = textField_NumRegNat.getText();
+
+        try
+        {
+            DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE);
+            Date d = df.parse(textField_DateNais.getText());
+            dateNais.setTime(d);
+
+            listeForce = Integer.parseInt(textField_ListeForce.getText());
+        }
+        catch(ParseException exception)
+        {
+            JOptionPane.showMessageDialog(null, "Le format de la date saisie est invalide!", "Date invalide", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        catch(NumberFormatException exception)
+        {
+            JOptionPane.showMessageDialog(null, "Le nombre entré pour la liste de force est invalide!", "Liste de force invalide", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        adresse = textField_Adresse.getText();
+        sexe = (String)cbBox_Sexe.getSelectedItem();
+        classement = (String)cbBox_Classement.getSelectedItem();
     }
 
     public boolean isOk() { return ok; }

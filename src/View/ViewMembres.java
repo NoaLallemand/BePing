@@ -1,6 +1,8 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -9,7 +11,6 @@ import java.util.Vector;
 
 import Controler.Controleur;
 import Model.Club;
-import Model.Staff;
 import View.JTableModel.JoueursJTableModel;
 import View.JTableModel.StaffJTableModel;
 
@@ -55,13 +56,25 @@ public class ViewMembres
     public JButton getBtnModifierStaff() { return modifierStaffButton; }
     public JButton getBtnSupprimerStaff() { return supprimerStaffButton; }
 
+    public void setTextOn_textField_Nom(String nom) { textField_Nom.setText(nom); }
+    public void setTextOn_textField_Prenom(String prenom) { textField_Prenom.setText(prenom); }
+    public void setTextOn_textField_DateNaissance(String dateNaissance) { textField_DateNaissance.setText(dateNaissance); }
+    public void setTextOn_textField_NumRegNat(String numRegNat) { textField_NumRegNat.setText(numRegNat); }
+    public void setTextOn_textField_Adresse(String adresse) { textField_Adresse.setText(adresse); }
+    public void setTextOn_textField_Sexe(String sexe) { textField_Sexe.setText(sexe); }
+    public void setTextOn_textField_Classement(String classement) { textField_Classement.setText(classement); }
+    public void setTextOn_textField_LForce(String listeForce) { textField_LForce.setText(listeForce);}
+
     public void setControleur(Controleur c)
     {
         ajouterJoueurButton.addActionListener(c);
+        modifierJoueurButton.addActionListener(c);
 
         ajouterStaffButton.addActionListener(c);
         modifierStaffButton.addActionListener(c);
         supprimerStaffButton.addActionListener(c);
+
+        tableJoueurs.getSelectionModel().addListSelectionListener(c);
     }
 
     public void setTableModelForTableStaff()

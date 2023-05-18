@@ -214,7 +214,7 @@ public class Personne
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Personne personne = (Personne) o;
-        return Objects.equals(numRegistreNational, personne.numRegistreNational) && Objects.equals(nom, personne.nom) && Objects.equals(prenom, personne.prenom) && Objects.equals(dateNaissance, personne.dateNaissance) && Objects.equals(adresse, personne.adresse) && Objects.equals(sexe, personne.sexe);
+        return numRegistreNational.equals(personne.numRegistreNational) && nom.equals(personne.nom) && prenom.equals(personne.prenom) && dateNaissance.equals(personne.dateNaissance) && adresse.equals(personne.adresse) && sexe.equals(personne.sexe);
     }
 
     public static void main(String Args[])

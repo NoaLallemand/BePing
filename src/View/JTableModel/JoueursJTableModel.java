@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class JoueursJTableModel extends AbstractTableModel
 {
-    private String[] columnNames = {"Num. Registre National", "Nom", "Prénom", "Date de naissance", "Adresse", "Sexe", "Classement", "Liste force"};
+    private String[] columnNames = {"Num. Registre National", "Nom", "Prénom"};
     private ArrayList<Joueur> data;
 
     public JoueursJTableModel(ArrayList<Joueur> data)
@@ -37,21 +37,6 @@ public class JoueursJTableModel extends AbstractTableModel
 
             case 2:
                 return j.getPrenom();
-
-            case 3:
-                return j.getDateNaissance();
-
-            case 4:
-                return j.getAdresse();
-
-            case 5:
-                return j.getSexe();
-
-            case 6:
-                return j.getClassement();
-
-            case 7:
-                return j.getListeForce();
 
             default:
                 return null;
