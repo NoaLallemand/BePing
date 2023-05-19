@@ -2,7 +2,11 @@ package View.JTableModel;
 
 import javax.swing.table.AbstractTableModel;
 import Model.Staff;
+
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class StaffJTableModel extends AbstractTableModel
 {
@@ -37,7 +41,10 @@ public class StaffJTableModel extends AbstractTableModel
                 return s.getPrenom();
 
             case 3:
-                return s.getDateNaissance();
+                Date d = s.getDateNaissance().getTime();
+                DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE);
+                String dateFormatee = df.format(d);
+                return dateFormatee;
 
             case 4:
                 return s.getAdresse();
@@ -57,7 +64,7 @@ public class StaffJTableModel extends AbstractTableModel
     public void setValueAt(Object value, int row, int col)
     {
         super.setValueAt(value, row, col);
-        fireTableDataChanged();
+        //fireTableDataChanged();
     }
 
     @Override

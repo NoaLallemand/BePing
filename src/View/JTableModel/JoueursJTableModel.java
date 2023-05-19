@@ -1,5 +1,6 @@
 package View.JTableModel;
 
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 import Model.Joueur;
 import Model.Staff;
@@ -47,7 +48,7 @@ public class JoueursJTableModel extends AbstractTableModel
     public void setValueAt(Object value, int row, int col)
     {
         super.setValueAt(value, row, col);
-        fireTableDataChanged();
+        //fireTableDataChanged();
     }
 
     @Override

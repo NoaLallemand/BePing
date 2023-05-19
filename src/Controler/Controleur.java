@@ -8,6 +8,8 @@ import Model.*;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.text.View;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,6 +36,12 @@ public class Controleur implements ActionListener, ListSelectionListener
         if(e.getSource() == mainView.getViewMembres().getBtnAjouterStaff()) {
             onNouveauStaff();
         }
+        else if(e.getSource() == mainView.getViewMembres().getBtnModifierStaff()) {
+            onModifierStaff();
+        }
+        else if(e.getSource() == mainView.getViewMembres().getBtnSupprimerStaff()) {
+            onSupprimerStaff();
+        }
 
         if(e.getSource() == mainView.getViewMembres().getBtnAjouterJoueur()) {
             onNouveauJoueur();
@@ -41,17 +49,21 @@ public class Controleur implements ActionListener, ListSelectionListener
         else if(e.getSource() == mainView.getViewMembres().getBtnModifierJoueur()) {
             onModifierJoueur();
         }
+        else if(e.getSource() == mainView.getViewMembres().getBtnSupprimerJoueur()) {
+            onSupprimerJoueur();
+        }
 
         if(e.getSource() == mainView.getViewEquipes().getBtnAjouterEquipe()) {
             onNouvelleEquipe();
         }
     }
 
-    //Méthode exécutée lors d'un changement d'élément sélectionné dans la JTable des joueurs.
+    //Méthode exécutée lors d'un changement d'élément sélectionné dans la JTable des joueurs pour actualiser l'affichage
+    //des informations détaillées du joueur.
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        ViewMembres vueMembres = mainView.getViewMembres();
 
+        ViewMembres vueMembres = mainView.getViewMembres();
         int indice = vueMembres.getTableJoueurs().getSelectedRow();
         Joueur j = singleton.getListeJoueursClub().get(indice);
 
@@ -85,7 +97,8 @@ public class Controleur implements ActionListener, ListSelectionListener
             singleton.getListeStaffClub().add(s);
 
             JTable t = mainView.getViewMembres().getTableStaff();
-            for(int i=0; i<7; i++)
+            ((AbstractTableModel)(t.getModel())).fireTableRowsInserted(t.getRowCount()-1, t.getRowCount()-1);
+            /*for(int i=0; i<7; i++)
             {
                 switch(i)
                 {
@@ -116,9 +129,61 @@ public class Controleur implements ActionListener, ListSelectionListener
                     case 6:
                         t.setValueAt(s.getRole(), t.getRowCount()-1, i);
                 }
-            }
+            }*/
         }
         d.dispose();
+    }
+
+    public void onModifierStaff()
+    {
+        int indexSelectedRow;
+        JTable refTableStaff = mainView.getViewMembres().getTableStaff();
+        if( (indexSelectedRow = refTableStaff.getSelectedRow()) != -1)
+        {
+            Staff s = singleton.getListeStaffClub().get(indexSelectedRow);
+            DialogAjouteStaff d = new DialogAjouteStaff(mainView, true, s, indexSelectedRow);
+            if(d.isOk())
+            {
+                Staff staffModif = d.getMembreStaff();
+                try
+                {
+                    s.setNom(staffModif.getNom());
+                    s.setPrenom(staffModif.getPrenom());
+                    s.setNumRegistreNational(staffModif.getNumRegistreNational());
+                    s.setAdresse(staffModif.getAdresse());
+                    s.setDateNaissance(staffModif.getDateNaissance());
+                    s.setSexe(staffModif.getSexe());
+                    s.setRole(staffModif.getRole());
+                }
+                catch(Exception ex)
+                {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+
+                ((AbstractTableModel)(refTableStaff.getModel())).fireTableRowsUpdated(indexSelectedRow, indexSelectedRow);
+            }
+            d.dispose();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Aucun membre du staff n'est sélectionné...Veuillez sélectionner le membre du staff que vous voulez modifier.");
+        }
+    }
+
+    public void onSupprimerStaff()
+    {
+        int indexSelectedRow;
+        JTable refTableS = mainView.getViewMembres().getTableStaff();
+
+        if( (indexSelectedRow = refTableS.getSelectedRow()) != -1)
+        {
+            singleton.getListeStaffClub().remove(indexSelectedRow);
+            mainView.repaint();
+            //((AbstractTableModel)refTableS.getModel()).fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Aucun membre du staff n'est sélectionné...veuillez sélectionner le membre du staff que vous souhaitez supprimer.");
+        }
     }
 
     public void onNouveauJoueur()
@@ -129,12 +194,25 @@ public class Controleur implements ActionListener, ListSelectionListener
             Joueur j = d.getNouveauJoueur();
             singleton.getListeJoueursClub().add(j);
 
+
             JTable t = mainView.getViewMembres().getTableJoueurs();
+            ((AbstractTableModel)(t.getModel())).fireTableRowsInserted(t.getRowCount()-1, t.getRowCount()-1);
+            /*for(int i=0; i<3; i++)
+            {
+                switch(i)
+                {
+                    case 0:
+                        t.setValueAt(j.getNumRegistreNational(), t.getRowCount()-1, i);
+                        break;
 
-            t.setValueAt(j.getNumRegistreNational(), t.getRowCount()-1, 0);
-            t.setValueAt(j.getNom(), t.getRowCount()-1, 1);
-            t.setValueAt(j.getPrenom(), t.getRowCount()-1, 2);
+                    case 1:
+                        t.setValueAt(j.getNom(), t.getRowCount()-1, i);
+                        break;
 
+                    case 2:
+                        t.setValueAt(j.getPrenom(), t.getRowCount()-1, i);
+                }
+            }*/
         }
         d.dispose();
     }
@@ -142,7 +220,9 @@ public class Controleur implements ActionListener, ListSelectionListener
     public void onModifierJoueur()
     {
         int selectedRow;
-        if( (selectedRow = mainView.getViewMembres().getTableJoueurs().getSelectedRow()) != -1)
+        JTable refTableJ = mainView.getViewMembres().getTableJoueurs();
+
+        if( (selectedRow = refTableJ.getSelectedRow()) != -1)
         {
             Joueur j = singleton.getListeJoueursClub().get(selectedRow);
             DialogAjouteJoueur d = new DialogAjouteJoueur(mainView, true, j, selectedRow);
@@ -161,25 +241,51 @@ public class Controleur implements ActionListener, ListSelectionListener
                 }
                 catch(Exception e)
                 {
-                    JOptionPane.showMessageDialog(null, "");
+                    JOptionPane.showMessageDialog(null, e.getMessage());
                 }
 
-                if( (selectedRow = mainView.getViewMembres().getTableJoueurs().getSelectedRow()) != -1)
-                {
-                    System.out.println("Valeur de selectedRow = " + selectedRow);
-                    JTable jt = mainView.getViewMembres().getTableJoueurs();
-                    jt.setValueAt(j.getNumRegistreNational(), selectedRow, 0);
-                    jt.setValueAt(j.getNom(), selectedRow, 1);
-                    jt.setValueAt(j.getPrenom(), selectedRow, 2);
-                }
-
-                valueChanged(new ListSelectionEvent(mainView.getViewMembres().getTableJoueurs(), selectedRow, selectedRow, false));
+                ((AbstractTableModel)(refTableJ.getModel())).fireTableRowsUpdated(selectedRow, selectedRow);
+                valueChanged(new ListSelectionEvent(this, selectedRow, selectedRow, false));
             }
             d.dispose();
         }
         else
         {
             JOptionPane.showMessageDialog(null, "Aucun joueur n'est sélectionné...veuillez sélectionner le joueur que vous souhaitez modifier.");
+        }
+    }
+
+    public void onSupprimerJoueur()
+    {
+        int indexSelectedRow;
+        JTable refTableJ = mainView.getViewMembres().getTableJoueurs();
+
+        if( (indexSelectedRow = refTableJ.getSelectedRow()) != -1) {
+
+            singleton.getListeJoueursClub().remove(indexSelectedRow);
+            mainView.repaint();
+            //((AbstractTableModel)refTableJ.getModel()).fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
+
+            if(refTableJ.getRowCount() == 0 || indexSelectedRow == refTableJ.getRowCount())
+            {
+                ViewMembres vMembres = mainView.getViewMembres();
+
+                vMembres.setTextOn_textField_Nom("");
+                vMembres.setTextOn_textField_Prenom("");
+                vMembres.setTextOn_textField_DateNaissance("");
+                vMembres.setTextOn_textField_Adresse("");
+                vMembres.setTextOn_textField_Classement("");
+                vMembres.setTextOn_textField_LForce("");
+                vMembres.setTextOn_textField_Sexe("");
+                vMembres.setTextOn_textField_NumRegNat("");
+            }
+            else
+            {
+                valueChanged(new ListSelectionEvent(this, indexSelectedRow, indexSelectedRow, false));
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Aucun joueur n'est sélectionné...veuillez sélectionner le joueur que vous souhaitez supprimer.");
         }
     }
     public void onNouvelleEquipe()

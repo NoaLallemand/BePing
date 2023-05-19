@@ -37,6 +37,7 @@ public class ViewMembres
     private JTextField textField_Salaire;
     private JTextField textField_DateDebut;
     private JTextField textField_DateFin;
+    private JPanel JPanel_infosContrat;
 
     public ViewMembres()
     {
@@ -69,6 +70,7 @@ public class ViewMembres
     {
         ajouterJoueurButton.addActionListener(c);
         modifierJoueurButton.addActionListener(c);
+        supprimerJoueurButton.addActionListener(c);
 
         ajouterStaffButton.addActionListener(c);
         modifierStaffButton.addActionListener(c);

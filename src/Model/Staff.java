@@ -32,7 +32,7 @@ public class Staff extends Personne
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Staff staff = (Staff) o;
-        return role.equals(staff.role);
+        return super.equals(staff) && role.equals(staff.role);
     }
 }
 

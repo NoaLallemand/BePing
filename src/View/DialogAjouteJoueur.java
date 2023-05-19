@@ -75,6 +75,7 @@ public class DialogAjouteJoueur extends JDialog
     public DialogAjouteJoueur(JFrame parent, boolean modal, Joueur j, int selectedRow)
     {
         super(parent, modal);
+        ajouterButton.setText("Modifier");
         chargeComposants();
         donneesAncienJoueur = j;
 
