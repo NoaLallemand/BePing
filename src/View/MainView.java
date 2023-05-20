@@ -64,6 +64,7 @@ public class MainView extends JFrame
         if(panel != getContentPane())
         {
             setContentPane(panel);
+            setVisible(true);
         }
     }
 }

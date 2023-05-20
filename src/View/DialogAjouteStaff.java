@@ -48,10 +48,9 @@ public class DialogAjouteStaff extends JDialog
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                recupereContenuFormulaire();
-
                 try
                 {
+                    recupereContenuFormulaire();
                     membreStaff = new Staff(numRegNat, nom, prenom, dateNais, adresse, sexe, role);
                     ok = true;
                     setVisible(false);
@@ -111,10 +110,9 @@ public class DialogAjouteStaff extends JDialog
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                recupereContenuFormulaire();
-
                 try
                 {
+                    recupereContenuFormulaire();
                     membreStaff = new Staff(numRegNat, nom, prenom, dateNais, adresse, sexe, role);
                     if(membreStaff.equals(donneesAncienStaff))
                     {
@@ -159,7 +157,7 @@ public class DialogAjouteStaff extends JDialog
         dateNais = new GregorianCalendar();
     }
 
-    private void recupereContenuFormulaire()
+    private void recupereContenuFormulaire() throws Exception
     {
         nom = textField_Nom.getText();
         prenom = textField_Prenom.getText();
@@ -173,8 +171,7 @@ public class DialogAjouteStaff extends JDialog
         }
         catch(ParseException exception)
         {
-            JOptionPane.showMessageDialog(null, "Le format de la date saisie est invalide!", "Date invalide", JOptionPane.ERROR_MESSAGE);
-            return;
+            throw new Exception("Le format de la date entrée est invalide!");
         }
 
         adresse = textField_Adresse.getText();

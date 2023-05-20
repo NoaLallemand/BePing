@@ -49,9 +49,9 @@ public class DialogAjouteJoueur extends JDialog
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                recupereContenuFormulaire();
                 try
                 {
+                    recupereContenuFormulaire();
                     nouveauJoueur = new Joueur(numRegNat, nom, prenom, dateNais, adresse, sexe, classement, listeForce);
                     ok = true;
                     setVisible(false);
@@ -113,9 +113,9 @@ public class DialogAjouteJoueur extends JDialog
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                recupereContenuFormulaire();
                 try
                 {
+                    recupereContenuFormulaire();
                     nouveauJoueur = new Joueur(numRegNat, nom, prenom, dateNais, adresse, sexe, classement, listeForce);
                     if(nouveauJoueur.equals(donneesAncienJoueur))
                     {
@@ -164,7 +164,7 @@ public class DialogAjouteJoueur extends JDialog
         dateNais = new GregorianCalendar();
     }
 
-    private void recupereContenuFormulaire()
+    private void recupereContenuFormulaire() throws Exception
     {
         nom = textField_Nom.getText();
         prenom = textField_Prenom.getText();
@@ -180,13 +180,11 @@ public class DialogAjouteJoueur extends JDialog
         }
         catch(ParseException exception)
         {
-            JOptionPane.showMessageDialog(null, "Le format de la date saisie est invalide!", "Date invalide", JOptionPane.ERROR_MESSAGE);
-            return;
+            throw new Exception("Le format de la date entrée est invalide!");
         }
         catch(NumberFormatException exception)
         {
-            JOptionPane.showMessageDialog(null, "Le nombre entré pour la liste de force est invalide!", "Liste de force invalide", JOptionPane.ERROR_MESSAGE);
-            return;
+            throw new Exception("Le nombre entré pour le champ \"liste de force\" est invalide!");
         }
 
         adresse = textField_Adresse.getText();

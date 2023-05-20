@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,9 +17,9 @@ public class Main {
         {
             Club.getClubInstance().Load();
         }
-        catch(Exception e)
+        catch(IOException | ClassNotFoundException | SecurityException e )
         {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erreur lors de l'importation des données issues de l'application...", "Importation données", JOptionPane.ERROR_MESSAGE);
         }
 
         MainView fenetrePrincipale = new MainView();

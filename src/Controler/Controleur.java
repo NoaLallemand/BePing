@@ -36,15 +36,19 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         }
         else if(e.getSource() == mainView.getMenuItemSaveData())
         {
-            try
+            if(!singleton.areAllDataRecorded())
             {
-                singleton.Save();
+                try
+                {
+                    singleton.Save();
+                    singleton.setStateRecordedData(true);
+                    JOptionPane.showMessageDialog(null, "Toutes les modifications ont bien été enregistrées!", "Sauvegarde réussie", JOptionPane.INFORMATION_MESSAGE);
+                }
+                catch(IOException ex)
+                {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             }
-            catch(IOException ex)
-            {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-
         }
 
 
@@ -100,17 +104,20 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
     @Override
     public void windowClosing(WindowEvent e)
     {
-        try
+        if(!singleton.areAllDataRecorded())
         {
-            singleton.Save();
-        }
-        catch(FileNotFoundException ex)
-        {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-        catch(IOException ex)
-        {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            try
+            {
+                singleton.Save();
+            }
+            catch(FileNotFoundException ex)
+            {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+            catch(IOException ex)
+            {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
     }
 
@@ -130,38 +137,8 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
 
             JTable t = mainView.getViewMembres().getTableStaff();
             ((AbstractTableModel)(t.getModel())).fireTableRowsInserted(t.getRowCount()-1, t.getRowCount()-1);
-            /*for(int i=0; i<7; i++)
-            {
-                switch(i)
-                {
-                    case 0:
-                        t.setValueAt(s.getNumRegistreNational(), t.getRowCount()-1, i);
-                        break;
 
-                    case 1:
-                        t.setValueAt(s.getNom(), t.getRowCount()-1, i);
-                        break;
-
-                    case 2:
-                        t.setValueAt(s.getPrenom(), t.getRowCount()-1, i);
-                        break;
-
-                    case 3:
-                        t.setValueAt(s.getDateNaissance(), t.getRowCount()-1, i);
-                        break;
-
-                    case 4:
-                        t.setValueAt(s.getAdresse(), t.getRowCount()-1, i);
-                        break;
-
-                    case 5:
-                        t.setValueAt(s.getSexe(), t.getRowCount()-1, i);
-                        break;
-
-                    case 6:
-                        t.setValueAt(s.getRole(), t.getRowCount()-1, i);
-                }
-            }*/
+            singleton.setStateRecordedData(false);
         }
         d.dispose();
     }
@@ -170,7 +147,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
     {
         int indexSelectedRow;
         JTable refTableStaff = mainView.getViewMembres().getTableStaff();
-        if( (indexSelectedRow = refTableStaff.getSelectedRow()) != -1)
+        if( ((indexSelectedRow = refTableStaff.getSelectedRow()) != -1) && (refTableStaff.getRowCount() > 0) )
         {
             Staff s = singleton.getListeStaffClub().get(indexSelectedRow);
             DialogAjouteStaff d = new DialogAjouteStaff(mainView, true, s, indexSelectedRow);
@@ -181,9 +158,9 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
                 {
                     s.setNom(staffModif.getNom());
                     s.setPrenom(staffModif.getPrenom());
+                    s.setDateNaissance(staffModif.getDateNaissance());
                     s.setNumRegistreNational(staffModif.getNumRegistreNational());
                     s.setAdresse(staffModif.getAdresse());
-                    s.setDateNaissance(staffModif.getDateNaissance());
                     s.setSexe(staffModif.getSexe());
                     s.setRole(staffModif.getRole());
                 }
@@ -193,6 +170,8 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
                 }
 
                 ((AbstractTableModel)(refTableStaff.getModel())).fireTableRowsUpdated(indexSelectedRow, indexSelectedRow);
+
+                singleton.setStateRecordedData(false);
             }
             d.dispose();
         }
@@ -207,10 +186,11 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         int indexSelectedRow;
         JTable refTableS = mainView.getViewMembres().getTableStaff();
 
-        if( (indexSelectedRow = refTableS.getSelectedRow()) != -1)
+        if( ((indexSelectedRow = refTableS.getSelectedRow()) != -1) && (refTableS.getRowCount() > 0) )
         {
             singleton.getListeStaffClub().remove(indexSelectedRow);
             mainView.repaint();
+            singleton.setStateRecordedData(false);
             //((AbstractTableModel)refTableS.getModel()).fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
         }
         else {
@@ -229,22 +209,8 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
 
             JTable t = mainView.getViewMembres().getTableJoueurs();
             ((AbstractTableModel)(t.getModel())).fireTableRowsInserted(t.getRowCount()-1, t.getRowCount()-1);
-            /*for(int i=0; i<3; i++)
-            {
-                switch(i)
-                {
-                    case 0:
-                        t.setValueAt(j.getNumRegistreNational(), t.getRowCount()-1, i);
-                        break;
 
-                    case 1:
-                        t.setValueAt(j.getNom(), t.getRowCount()-1, i);
-                        break;
-
-                    case 2:
-                        t.setValueAt(j.getPrenom(), t.getRowCount()-1, i);
-                }
-            }*/
+            singleton.setStateRecordedData(false);
         }
         d.dispose();
     }
@@ -254,7 +220,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         int selectedRow;
         JTable refTableJ = mainView.getViewMembres().getTableJoueurs();
 
-        if( (selectedRow = refTableJ.getSelectedRow()) != -1)
+        if( ((selectedRow = refTableJ.getSelectedRow()) != -1) && (refTableJ.getRowCount() > 0) )
         {
             Joueur j = singleton.getListeJoueursClub().get(selectedRow);
             DialogAjouteJoueur d = new DialogAjouteJoueur(mainView, true, j, selectedRow);
@@ -268,6 +234,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
                     j.setDateNaissance(joueurModif.getDateNaissance());
                     j.setNumRegistreNational(joueurModif.getNumRegistreNational());
                     j.setAdresse(joueurModif.getAdresse());
+                    j.setSexe(joueurModif.getSexe());
                     j.setClassement(joueurModif.getClassement());
                     j.setListeForce(joueurModif.getListeForce());
                 }
@@ -278,6 +245,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
 
                 ((AbstractTableModel)(refTableJ.getModel())).fireTableRowsUpdated(selectedRow, selectedRow);
                 valueChanged(new ListSelectionEvent(this, selectedRow, selectedRow, false));
+                singleton.setStateRecordedData(false);
             }
             d.dispose();
         }
@@ -292,10 +260,11 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         int indexSelectedRow;
         JTable refTableJ = mainView.getViewMembres().getTableJoueurs();
 
-        if( (indexSelectedRow = refTableJ.getSelectedRow()) != -1) {
-
+        if( ((indexSelectedRow = refTableJ.getSelectedRow()) != -1) && (refTableJ.getRowCount() > 0) )
+        {
             singleton.getListeJoueursClub().remove(indexSelectedRow);
             mainView.repaint();
+            singleton.setStateRecordedData(false);
             //((AbstractTableModel)refTableJ.getModel()).fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
 
             if(refTableJ.getRowCount() == 0 || indexSelectedRow == refTableJ.getRowCount())
@@ -316,7 +285,8 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
                 valueChanged(new ListSelectionEvent(this, indexSelectedRow, indexSelectedRow, false));
             }
         }
-        else {
+        else
+        {
             JOptionPane.showMessageDialog(null, "Aucun joueur n'est sélectionné...veuillez sélectionner le joueur que vous souhaitez supprimer.");
         }
     }

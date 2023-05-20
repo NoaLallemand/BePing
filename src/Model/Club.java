@@ -14,6 +14,7 @@ public class Club implements Serializable
     private ArrayList<Equipe> listeEquipesClub;
     private ArrayList<Equipe> listeEquipesAdverses;
     private ArrayList<Rencontre> listeRencontres;
+    private boolean stateRecordedData;
 
     private static Club instance = new Club();
 
@@ -27,6 +28,9 @@ public class Club implements Serializable
     public ArrayList<Rencontre> getListeRencontres() { return listeRencontres; }
     public ArrayList<Staff> getListeStaffClub() { return listeStaffClub; }
 
+    public void setStateRecordedData(boolean state) { stateRecordedData = state; }
+    public boolean areAllDataRecorded() { return stateRecordedData; }
+
     private Club()
     {
         listeJoueursClub = new ArrayList<>();
@@ -38,6 +42,7 @@ public class Club implements Serializable
         listeEquipesAdverses = new ArrayList<>();
 
         listeRencontres = new ArrayList<>();
+        stateRecordedData = true;
     }
 
     public void Save() throws IOException
@@ -64,11 +69,30 @@ public class Club implements Serializable
         }
     }
 
-    public void Load() throws IOException, ClassNotFoundException
+    public void Load() throws IOException, ClassNotFoundException, SecurityException
     {
-        try
+        File f = new File("BePing.club");
+        if(!f.exists())
         {
-            FileInputStream fis = new FileInputStream("BePing.club");
+            System.out.println("Fichier non existant.");
+            System.out.println("Création du fichier....");
+
+            FileOutputStream fos = new FileOutputStream("BePing.club", false);
+            fos.close();
+            stateRecordedData = false; //vu qu'on vient de créer le fichier, on veut que l'enregistrement se fasse au moins une fois
+                                        //car lors de la prochaine relecture du fichier, on verra qu'il existera bel et bien et il faut
+                                        //donc qu'il y ait déjà quelque chose d'écrit sinon l'exception EOFException sera lancée et on
+                                        //aura un petit message d'erreur au lancement de l'application.
+
+            if(f.exists())
+            {
+                System.out.print("Chemin d'accès absolu au fichier: ");
+                System.out.println(f.getAbsolutePath());
+            }
+        }
+        else
+        {
+            FileInputStream fis = new FileInputStream(f);
             ObjectInputStream oos = new ObjectInputStream(fis);
 
             listeJoueursClub = (ArrayList<Joueur>) oos.readObject();
@@ -76,34 +100,6 @@ public class Club implements Serializable
             listeEquipesClub = (ArrayList<Equipe>) oos.readObject();
 
             oos.close();
-        }
-        catch(FileNotFoundException e)
-        {
-            throw e;
-        }
-        catch(IOException e)
-        {
-            throw e;
-        }
-        catch(ClassNotFoundException e)
-        {
-            throw e;
-        }
-    }
-
-    public void supprimeElement(Object obj)
-    {
-        if(obj.getClass() == Joueur.class)
-        {
-            listeJoueursClub.remove((Joueur)obj);
-        }
-        else if(obj.getClass() == Equipe.class)
-        {
-            listeEquipesClub.remove((Equipe)obj);
-        }
-        else if (obj.getClass() == Rencontre.class)
-        {
-            listeRencontres.remove((Rencontre)obj);
         }
     }
 }
