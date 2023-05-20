@@ -10,12 +10,15 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.text.View;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class Controleur implements ActionListener, ListSelectionListener
+public class Controleur extends WindowAdapter implements ActionListener, ListSelectionListener
 {
     private MainView mainView;
     private Club singleton;
@@ -30,6 +33,18 @@ public class Controleur implements ActionListener, ListSelectionListener
         else if(e.getSource() == mainView.getMenuItemEquipes())
         {
             mainView.changeSelectedView(mainView.getViewEquipes().getEquipesPanel());
+        }
+        else if(e.getSource() == mainView.getMenuItemSaveData())
+        {
+            try
+            {
+                singleton.Save();
+            }
+            catch(IOException ex)
+            {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+
         }
 
 
@@ -80,6 +95,23 @@ public class Controleur implements ActionListener, ListSelectionListener
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         String dateFormatee = sdf.format(j.getDateNaissance().getTime());
         vueMembres.setTextOn_textField_DateNaissance(dateFormatee);
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e)
+    {
+        try
+        {
+            singleton.Save();
+        }
+        catch(FileNotFoundException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        catch(IOException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }
 
     public Controleur(MainView v, Club c)

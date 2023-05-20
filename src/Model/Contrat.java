@@ -1,11 +1,13 @@
 package Model;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Contrat {
+public class Contrat implements Serializable
+{
     private float salaire;
     private Date dateDebut;
     private Date dateFin;

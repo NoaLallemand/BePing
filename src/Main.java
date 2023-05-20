@@ -6,9 +6,21 @@ import Model.*;
 import View.*;
 import Controler.*;
 
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+
 public class Main {
     public static void main(String[] args)
     {
+        try
+        {
+            Club.getClubInstance().Load();
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
         MainView fenetrePrincipale = new MainView();
         Controleur controleur = new Controleur(fenetrePrincipale, Club.getClubInstance());
         fenetrePrincipale.setControleur(controleur);

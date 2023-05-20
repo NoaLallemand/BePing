@@ -1,8 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ResultatMatch {
+public class ResultatMatch implements Serializable
+{
     private int scoreLocaux;
     private Joueur joueurLocaux;
     private int scoreVisiteurs;

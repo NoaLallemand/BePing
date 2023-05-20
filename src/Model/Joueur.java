@@ -4,7 +4,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-public class Joueur extends Personne{
+public class Joueur extends Personne
+{
     private String classement;
     private int listeForce;
 

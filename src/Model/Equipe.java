@@ -1,8 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Equipe {
+public class Equipe implements Serializable
+{
     private int numEquipe;
     private String nomEquipe;
     private int division;

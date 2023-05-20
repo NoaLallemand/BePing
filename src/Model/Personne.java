@@ -1,10 +1,11 @@
 package Model;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.*;
 import java.lang.Exception;
 
-public class Personne
+public class Personne implements Serializable
 {
     protected String numRegistreNational;
     protected String nom;
@@ -198,12 +199,13 @@ public class Personne
 
     @Override
     public String toString() {
-        DateFormat d = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.FRANCE);
+        Date d = dateNaissance.getTime();
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.FRANCE);
         return "Personne {\n" +
                 "numRegistreNational='" + numRegistreNational + '\'' +
                 "\nnom='" + nom + '\'' +
                 "\nprenom='" + prenom + '\'' +
-                "\ndateNaissance=" + d.format(dateNaissance) +
+                "\ndateNaissance=" + df.format(d) +
                 "\nadresse='" + adresse + '\'' +
                 "\nsexe=" + sexe +
                 '}';

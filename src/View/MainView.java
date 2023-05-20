@@ -6,12 +6,13 @@ public class MainView extends JFrame
 {
     private ViewMembres fenetreMembres;
     private ViewEquipes fenetreEquipes;
-
     private JMenuBar menuPrincipal;
-    private JMenu menuEquipes;
-    private JMenuItem menuItemEquipes;
-    private JMenu menuMembres;
+    private JMenu menuClub;
+    private JMenu menuParametres;
     private JMenuItem menuItemMembres;
+    private JMenuItem menuItemEquipes;
+    private JMenuItem menuItemSaveData;
+
 
     public MainView()
     {
@@ -25,34 +26,37 @@ public class MainView extends JFrame
         menuPrincipal = new JMenuBar();
         setJMenuBar(menuPrincipal);
 
-        menuMembres = new JMenu("Gestion Membres");
-        menuEquipes = new JMenu("Gestion Equipes");
-        menuPrincipal.add(menuMembres);
-        menuPrincipal.add(menuEquipes);
+        menuClub = new JMenu("Gestion Club");
+        menuParametres = new JMenu("Paramètres");
+        menuPrincipal.add(menuParametres);
+        menuPrincipal.add(menuClub);
+
 
         menuItemMembres = new JMenuItem("Membres");
         menuItemEquipes = new JMenuItem("Equipes");
-        menuMembres.add(menuItemMembres);
-        menuEquipes.add(menuItemEquipes);
+        menuItemSaveData = new JMenuItem("Sauvegarder");
+        menuClub.add(menuItemMembres);
+        menuClub.add(menuItemEquipes);
+        menuParametres.add(menuItemSaveData);
     }
 
     public ViewMembres getViewMembres() { return fenetreMembres; }
     public ViewEquipes getViewEquipes() { return fenetreEquipes; }
 
-    public JMenu getMenuMembres() { return menuMembres; }
-    public JMenu getMenuEquipes() { return menuEquipes; }
-
     public JMenuItem getMenuItemMembres() { return menuItemMembres; }
 
     public JMenuItem getMenuItemEquipes() { return menuItemEquipes; }
+    public JMenuItem getMenuItemSaveData() { return menuItemSaveData; }
 
     public void setControleur(Controleur c)
     {
         menuItemMembres.addActionListener(c);
         menuItemEquipes.addActionListener(c);
+        menuItemSaveData.addActionListener(c);
 
         fenetreMembres.setControleur(c);
         fenetreEquipes.setControleur(c);
+        this.addWindowListener(c);
     }
 
     public void changeSelectedView(JPanel panel)
