@@ -75,6 +75,10 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         if(e.getSource() == mainView.getViewEquipes().getBtnAjouterEquipe()) {
             onNouvelleEquipe();
         }
+
+        if(e.getSource() == mainView.getViewEquipes().getBtnAddFeuilleMatch()) {
+            onNouvelleRencontre();
+        }
     }
 
     //Méthode exécutée lors d'un changement d'élément sélectionné dans la JTable des joueurs pour actualiser l'affichage
@@ -127,7 +131,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         singleton = c;
     }
 
-    public void onNouveauStaff()
+    private void onNouveauStaff()
     {
         DialogAjouteStaff d = new DialogAjouteStaff(mainView, true);
         if(d.isOk())
@@ -143,7 +147,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         d.dispose();
     }
 
-    public void onModifierStaff()
+    private void onModifierStaff()
     {
         int indexSelectedRow;
         JTable refTableStaff = mainView.getViewMembres().getTableStaff();
@@ -181,7 +185,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         }
     }
 
-    public void onSupprimerStaff()
+    private void onSupprimerStaff()
     {
         int indexSelectedRow;
         JTable refTableS = mainView.getViewMembres().getTableStaff();
@@ -198,7 +202,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         }
     }
 
-    public void onNouveauJoueur()
+    private void onNouveauJoueur()
     {
         DialogAjouteJoueur d = new DialogAjouteJoueur(mainView, true);
         if(d.isOk())
@@ -215,7 +219,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         d.dispose();
     }
 
-    public void onModifierJoueur()
+    private void onModifierJoueur()
     {
         int selectedRow;
         JTable refTableJ = mainView.getViewMembres().getTableJoueurs();
@@ -255,7 +259,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         }
     }
 
-    public void onSupprimerJoueur()
+    private void onSupprimerJoueur()
     {
         int indexSelectedRow;
         JTable refTableJ = mainView.getViewMembres().getTableJoueurs();
@@ -290,8 +294,26 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
             JOptionPane.showMessageDialog(null, "Aucun joueur n'est sélectionné...veuillez sélectionner le joueur que vous souhaitez supprimer.");
         }
     }
-    public void onNouvelleEquipe()
+    private void onNouvelleEquipe()
     {
         DialogAjouteEquipe d = new DialogAjouteEquipe(mainView,true);
+    }
+
+    private void onNouvelleRencontre()
+    {
+        if(singleton.getListeJoueursClub().size() >= 4 /*&& singleton.getListeJoueursAdverses().size() >= 4*/)
+        {
+            DialogAjouteRencontre d = new DialogAjouteRencontre(mainView,true, singleton.getListeJoueursClub(), singleton.getListeJoueursAdverses(),
+                    singleton.getListeEquipesClub(), singleton.getListeEquipesAdverses());
+            if(d.isOk())
+            {
+
+            }
+            d.dispose();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Impossible d'enregistrer une nouvelle feuille de match!\nLe nombre de joueurs du club ou bien le nombre de joueurs adverses est insuffisant!");
+        }
     }
 }

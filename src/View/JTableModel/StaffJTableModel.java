@@ -10,7 +10,7 @@ import java.util.Locale;
 
 public class StaffJTableModel extends AbstractTableModel
 {
-    private String[] columnNames = {"Num. Registre National", "Nom", "Prénom", "Date de naissance", "Adresse", "Sexe", "Role"};
+    private String[] columnNames = {"Num. Registre National", "Nom", "Prénom", "Date de naissance", "Sexe", "Role"};
     private ArrayList<Staff> data;
 
     public StaffJTableModel(ArrayList<Staff> data)
@@ -47,12 +47,9 @@ public class StaffJTableModel extends AbstractTableModel
                 return dateFormatee;
 
             case 4:
-                return s.getAdresse();
-
-            case 5:
                 return s.getSexe();
 
-            case 6:
+            case 5:
                 return s.getRole();
 
             default:
