@@ -301,7 +301,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
 
     private void onNouvelleRencontre()
     {
-        if(singleton.getListeJoueursClub().size() >= 4 /*&& singleton.getListeJoueursAdverses().size() >= 4*/)
+        if(singleton.getListeJoueursClub().size() >= 4 && singleton.getListeJoueursAdverses().size() >= 4)
         {
             DialogAjouteRencontre d = new DialogAjouteRencontre(mainView,true, singleton.getListeJoueursClub(), singleton.getListeJoueursAdverses(),
                     singleton.getListeEquipesClub(), singleton.getListeEquipesAdverses());

@@ -2,6 +2,7 @@ package View;
 
 import Model.Equipe;
 import Model.Joueur;
+import Model.ResultatMatch;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -33,6 +34,8 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
     private Joueur[] joueursVisiteursSelectionnes;
     private ArrayList<Equipe> listeEquipesClub;
     private ArrayList<Equipe> listeEquipesAdverses;
+    private ResultatMatch[] resultatsMatchs;
+
     public boolean isOk() { return ok; }
 
     public DialogAjouteRencontre(JFrame parent, boolean modal, ArrayList<Joueur> joueursClub, ArrayList<Joueur> joueursAdverses,
@@ -66,6 +69,7 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
 
         joueursLocauxSelectionnes = new Joueur[4];
         joueursVisiteursSelectionnes = new Joueur[4];
+        resultatsMatchs = new ResultatMatch[16];
 
         for(int i=0; i < listeEquipesClub.size(); i++)
         {
@@ -215,6 +219,20 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
         {
             if(isButtonEncoderJoueursClicked)
             {
+                int i = 0;
+
+                do
+                {
+                    Joueur j = joueursLocauxSelectionnes[i];
+                    DialogAjoutResultatsRencontre d = new DialogAjoutResultatsRencontre(parent, true, j, joueursVisiteursSelectionnes);
+                    if(d.isOk())
+                    {
+
+                    }
+                    d.dispose();
+
+                    i++;
+                }while(i < 4);
 
             }
             else JOptionPane.showMessageDialog(null, "Vous devez d'abord enregistrer les joueurs participant à la rencontre avant\nd'enregistrer les résultats des différents matchs!");

@@ -28,9 +28,11 @@ public class ResultatMatch implements Serializable
     public Joueur getJoueurLocaux() {return joueurLocaux;}
     public Joueur getJoueurVisiteur() {return joueurVisiteur;}
 
-    public ResultatMatch(int scoreLocaux, int scoreVisiteurs) {
+    public ResultatMatch(int scoreLocaux, int scoreVisiteurs, Joueur joueurLocaux, Joueur joueurVisiteur) {
         setScoreLocaux(scoreLocaux);
         setScoreVisiteurs(scoreVisiteurs);
+        setJoueurLocaux(joueurLocaux);
+        setJoueurVisiteur(joueurVisiteur);
     }
 
     @Override
