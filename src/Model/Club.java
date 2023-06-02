@@ -62,6 +62,7 @@ public class Club implements Serializable
             oos.writeObject(listeJoueursClub);
             oos.writeObject(listeStaffClub);
             oos.writeObject(listeEquipesClub);
+            oos.writeObject(listeRencontres);
 
             oos.flush();
             oos.close();
@@ -154,6 +155,7 @@ public class Club implements Serializable
             listeJoueursClub = (ArrayList<Joueur>) oos.readObject();
             listeStaffClub = (ArrayList<Staff>) oos.readObject();
             listeEquipesClub = (ArrayList<Equipe>) oos.readObject();
+            listeRencontres = (ArrayList<Rencontre>) oos.readObject();
 
             oos.close();
         }

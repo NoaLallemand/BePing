@@ -2,13 +2,15 @@ package View;
 
 import Model.Equipe;
 import Model.Joueur;
+import Model.Rencontre;
 import Model.ResultatMatch;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.*;
 
 public class DialogAjouteRencontre extends JDialog implements ActionListener
 {
@@ -29,12 +31,20 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
     private JFrame parent;
 
     private ArrayList<Joueur> listeJoueursClub;
-    private Joueur[] joueursLocauxSelectionnes;
     private ArrayList<Joueur> listeJoueursAdverses;
-    private Joueur[] joueursVisiteursSelectionnes;
     private ArrayList<Equipe> listeEquipesClub;
     private ArrayList<Equipe> listeEquipesAdverses;
+
+    private Joueur[] joueursLocauxSelectionnes;
+    private Joueur[] joueursVisiteursSelectionnes;
+    private Equipe equipeLocaleSelectionnee;
+    private Equipe equipeVisiteuseSelectionne;
     private ResultatMatch[] resultatsMatchs;
+    private GregorianCalendar dateDebutRencontre;
+    private GregorianCalendar dateFinRencontre;
+
+    private Rencontre nouvelleRencontre;
+    public Rencontre getNouvelleRencontre() {return nouvelleRencontre;}
 
     public boolean isOk() { return ok; }
 
@@ -67,6 +77,9 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
         isButtonEncoderJoueursClicked = false;
         isButtonEncoderResultatsClicked = false;
 
+        dateDebutRencontre = new GregorianCalendar();
+        dateFinRencontre = new GregorianCalendar();
+
         joueursLocauxSelectionnes = new Joueur[4];
         joueursVisiteursSelectionnes = new Joueur[4];
         resultatsMatchs = new ResultatMatch[16];
@@ -95,7 +108,30 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
         {
             if(isButtonEncoderJoueursClicked && isButtonEncoderResultatsClicked)
             {
+                int indiceItemSelectionne = cbBox_EquipeLocale.getSelectedIndex();
+                equipeLocaleSelectionnee = listeEquipesClub.get(indiceItemSelectionne);
 
+                indiceItemSelectionne = cbBox_EquipeVisiteuse.getSelectedIndex();
+                equipeVisiteuseSelectionne = listeEquipesAdverses.get(indiceItemSelectionne);
+
+                try
+                {
+                    DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.FRANCE);
+                    Date d = df.parse(textField_debutRencontre.getText());
+                    dateDebutRencontre.setTime(d);
+
+                    d = df.parse(textField_FinRencontre.getText());
+                    dateFinRencontre.setTime(d);
+
+                    nouvelleRencontre = new Rencontre(equipeLocaleSelectionnee, equipeVisiteuseSelectionne, joueursLocauxSelectionnes, joueursVisiteursSelectionnes, resultatsMatchs, dateDebutRencontre, dateFinRencontre);
+
+                    ok = true;
+                    setVisible(false);
+                }
+                catch(ParseException exception)
+                {
+                    JOptionPane.showMessageDialog(null,  "Le format de la date de début de rencontre ou de la date de fin de reoncontre est invalide!\nVeuillez respecter le format JJ/MM/YYYY HH:MI", "Date de la rencontre invalide", JOptionPane.ERROR_MESSAGE);
+                }
             }
             else
             {
@@ -220,6 +256,7 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
             if(isButtonEncoderJoueursClicked)
             {
                 int i = 0;
+                boolean cont = true;
 
                 do
                 {
@@ -227,12 +264,36 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
                     DialogAjoutResultatsRencontre d = new DialogAjoutResultatsRencontre(parent, true, j, joueursVisiteursSelectionnes);
                     if(d.isOk())
                     {
+                        int l = (i * 4);
+                        ResultatMatch[] quatreResultatsMatchs = d.getResultatsMatchs(); //retourne les résultats des 4 matchs du joueur local numero "i".
+                        for(int k = l, m = 0; k < (l+4); k++, m++)
+                        {
+                            resultatsMatchs[k] = quatreResultatsMatchs[m];
 
+                            System.out.println(resultatsMatchs[k].toString());
+                        }
+                    }
+                    else
+                    {
+                        cont = false;
+                        if(i > 0)
+                        {
+                            int nbResultatsDejaEncodes = ((i - 1) * 4);
+                            for(int a=0; a < nbResultatsDejaEncodes; a++)
+                            {
+                                resultatsMatchs[a] = null;
+                            }
+                        }
                     }
                     d.dispose();
 
                     i++;
-                }while(i < 4);
+                }while(i < 4 && cont == true);
+
+                if(cont == true)
+                {
+                    isButtonEncoderResultatsClicked = true;
+                }
 
             }
             else JOptionPane.showMessageDialog(null, "Vous devez d'abord enregistrer les joueurs participant à la rencontre avant\nd'enregistrer les résultats des différents matchs!");

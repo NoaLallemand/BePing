@@ -38,8 +38,10 @@ public class ResultatMatch implements Serializable
     @Override
     public String toString() {
         return "ResultatMatch{" +
-                "scoreLocaux='" + scoreLocaux + '\'' +
+                "joueurLocaux='" + joueurLocaux + '\'' +
+                ", scoreLocaux='" + scoreLocaux + '\'' +
                 ", scoreVisiteurs='" + scoreVisiteurs + '\'' +
+                ", joueurVisiteur='" + joueurVisiteur + '\'' +
                 '}';
     }
 
@@ -48,6 +50,6 @@ public class ResultatMatch implements Serializable
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ResultatMatch that = (ResultatMatch) o;
-        return scoreLocaux == that.scoreLocaux && scoreVisiteurs == that.scoreVisiteurs;
+        return scoreLocaux == that.scoreLocaux && scoreVisiteurs == that.scoreVisiteurs && joueurLocaux.equals(that.joueurLocaux) && joueurVisiteur.equals(that.joueurVisiteur);
     }
 }

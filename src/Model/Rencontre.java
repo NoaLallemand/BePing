@@ -1,9 +1,8 @@
 package Model;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Objects;
+import java.text.DateFormat;
+import java.util.*;
 
 public class Rencontre implements Serializable
 {
@@ -13,8 +12,8 @@ public class Rencontre implements Serializable
     private Joueur[] joueursLocaux; //4 joueurs Locaux
     private Joueur[] joueursVisiteurs; //4 joueurs Visiteurs
     private ResultatMatch[] resultat; //16 matchs différents au total
-    private Date dateDebut;
-    private Date dateFin;
+    private GregorianCalendar dateDebut;
+    private GregorianCalendar dateFin;
 
     public Equipe getLocaux() {
         return locaux;
@@ -27,10 +26,10 @@ public class Rencontre implements Serializable
     public ResultatMatch[] getResultat() {
         return resultat;
     }
-    public Date getDateDebut() {
+    public GregorianCalendar getDateDebut() {
         return dateDebut;
     }
-    public Date getDateFin() {
+    public GregorianCalendar getDateFin() {
         return dateFin;
     }
 
@@ -43,14 +42,14 @@ public class Rencontre implements Serializable
     public void setJoueursLocaux(Joueur[] tabJoueurs) { this.joueursLocaux = tabJoueurs; }
     public void setJoueursVisiteurs(Joueur[] tabJoueurs) { this.joueursVisiteurs = tabJoueurs; }
     public void setResultat(ResultatMatch[] resultat) { this.resultat = resultat; }
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(GregorianCalendar dateDebut) {
         this.dateDebut = dateDebut;
     }
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(GregorianCalendar dateFin) {
         this.dateFin = dateFin;
     }
 
-    public Rencontre(Equipe locaux, Equipe visiteurs, Joueur[] joueursLocaux, Joueur[] joueursVisiteurs, ResultatMatch[] resultat, Date dateDebut, Date dateFin) {
+    public Rencontre(Equipe locaux, Equipe visiteurs, Joueur[] joueursLocaux, Joueur[] joueursVisiteurs, ResultatMatch[] resultat, GregorianCalendar dateDebut, GregorianCalendar dateFin) {
         setLocaux(locaux);
         setVisiteurs(visiteurs);
         setResultat(resultat);
@@ -62,12 +61,15 @@ public class Rencontre implements Serializable
 
     @Override
     public String toString() {
+        Date dDebut = dateDebut.getTime();
+        Date dFin = dateFin.getTime();
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.FRANCE);
         return "Rencontre" +
                 "\n{locaux='" + locaux + '\'' +
                 "\nvisiteurs='" + visiteurs + '\'' +
-                "\nresultat='" + resultat + '\'' +
-                "\ndateDebut='" + dateDebut + '\'' +
-                "\ndateFin='" + dateFin + '\'' + '}';
+                "\ndateDebut='" + df.format(dDebut) + '\'' +
+                "\ndateFin='" + df.format(dFin) + '\'' +
+                "\nresultat='" + resultat.toString() + '\'' + '}';
     }
 
     @Override

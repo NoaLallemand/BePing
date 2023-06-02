@@ -307,7 +307,14 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
                     singleton.getListeEquipesClub(), singleton.getListeEquipesAdverses());
             if(d.isOk())
             {
+                Rencontre r = d.getNouvelleRencontre();
+                singleton.getListeRencontres().add(r);
+                System.out.println("Affichage de la nouvelle rencontre:\n" + r.toString());
 
+                JTable t = mainView.getViewEquipes().getTableRencontres();
+                ((AbstractTableModel)(t.getModel())).fireTableRowsInserted(t.getRowCount()-1, t.getRowCount()-1);
+
+                singleton.setStateRecordedData(false);
             }
             d.dispose();
         }

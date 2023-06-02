@@ -1,6 +1,8 @@
 package View;
 
 import Controler.Controleur;
+import Model.Club;
+import View.JTableModel.RencontreJTableModel;
 
 import javax.swing.*;
 
@@ -15,6 +17,8 @@ public class ViewEquipes {
     private JScrollBar scrollBar_PanelDetailsRencontre;
 
     public JPanel getEquipesPanel() { return EquipesPanel; }
+
+    public JTable getTableRencontres() { return tableRencontres; }
 
 
     public static void main(String[] args) {
@@ -31,5 +35,15 @@ public class ViewEquipes {
         ajouterEquipeButton.addActionListener(c);
 
         addFeuilleMatchButton.addActionListener(c);
+    }
+
+    public void setTableModelForTableRencontres()
+    {
+        RencontreJTableModel rencontreTableModel = new RencontreJTableModel(Club.getClubInstance().getListeRencontres());
+        tableRencontres = new JTable(rencontreTableModel);
+    }
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        setTableModelForTableRencontres();
     }
 }

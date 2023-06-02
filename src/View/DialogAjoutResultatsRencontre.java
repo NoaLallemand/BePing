@@ -35,8 +35,6 @@ public class DialogAjoutResultatsRencontre extends JDialog implements ActionList
     private Joueur joueurLocal;
     private Joueur[] joueursVisiteurs;
     private ResultatMatch[] resultatsMatchs;
-    private int stockeScoreLocaux;
-    private int stockeScoreVisiteurs;
 
     public boolean isOk() { return ok; }
     public ResultatMatch[] getResultatsMatchs() { return resultatsMatchs; }
@@ -81,6 +79,7 @@ public class DialogAjoutResultatsRencontre extends JDialog implements ActionList
 
     private void recupereDonneesResultatsMatchs() throws Exception
     {
+        int stockeScoreLocaux, stockeScoreVisiteurs;
         for(int i=0; i<4; i++)
         {
             JTextField tfScoreLocaux = getTextFiedScoreLocauxNumberX(i+1);

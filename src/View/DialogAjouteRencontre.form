@@ -45,7 +45,7 @@
               <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Date et heure du début de la rencontre"/>
+              <text value="Date et heure du début de la rencontre (JJ/MM/YYYY HH:MI)"/>
             </properties>
           </component>
           <component id="5eff5" class="javax.swing.JTextField" binding="textField_debutRencontre">
@@ -61,7 +61,7 @@
               <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Date et heure de fin de la rencontre"/>
+              <text value="Date et heure de fin de la rencontre (JJ/MM/YYYY HH:MI)"/>
             </properties>
           </component>
           <component id="f2aa9" class="javax.swing.JTextField" binding="textField_FinRencontre">
