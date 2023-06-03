@@ -137,7 +137,8 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         if(d.isOk())
         {
             Staff s = d.getMembreStaff();
-            singleton.getListeStaffClub().add(s);
+            //singleton.getListeStaffClub().add(s);
+            singleton.ajouteStaff(s);
 
             JTable t = mainView.getViewMembres().getTableStaff();
             ((AbstractTableModel)(t.getModel())).fireTableRowsInserted(t.getRowCount()-1, t.getRowCount()-1);
@@ -208,7 +209,9 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         if(d.isOk())
         {
             Joueur j = d.getNouveauJoueur();
-            singleton.getListeJoueursClub().add(j);
+
+            //singleton.getListeJoueursClub().add(j);
+            singleton.ajouteJoueur(j);
 
 
             JTable t = mainView.getViewMembres().getTableJoueurs();
@@ -231,21 +234,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
             if(d.isOk())
             {
                 Joueur joueurModif = d.getNouveauJoueur();
-                try
-                {
-                    j.setNom(joueurModif.getNom());
-                    j.setPrenom(joueurModif.getPrenom());
-                    j.setDateNaissance(joueurModif.getDateNaissance());
-                    j.setNumRegistreNational(joueurModif.getNumRegistreNational());
-                    j.setAdresse(joueurModif.getAdresse());
-                    j.setSexe(joueurModif.getSexe());
-                    j.setClassement(joueurModif.getClassement());
-                    j.setListeForce(joueurModif.getListeForce());
-                }
-                catch(Exception e)
-                {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
-                }
+                singleton.modifierJoueur(j, joueurModif);
 
                 ((AbstractTableModel)(refTableJ.getModel())).fireTableRowsUpdated(selectedRow, selectedRow);
                 valueChanged(new ListSelectionEvent(this, selectedRow, selectedRow, false));
@@ -308,7 +297,8 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
             if(d.isOk())
             {
                 Rencontre r = d.getNouvelleRencontre();
-                singleton.getListeRencontres().add(r);
+                //singleton.getListeRencontres().add(r);
+                singleton.ajouteRencontre(r);
                 System.out.println("Affichage de la nouvelle rencontre:\n" + r.toString());
 
                 JTable t = mainView.getViewEquipes().getTableRencontres();

@@ -1,4 +1,7 @@
 package Model;
+import LogBean.LogEvent;
+import LogBean.LogListener;
+
 import javax.swing.*;
 import java.io.*;
 import java.lang.reflect.Array;
@@ -14,6 +17,7 @@ public class Club implements Serializable
     private ArrayList<Equipe> listeEquipesAdverses;
     private ArrayList<Rencontre> listeRencontres;
     private boolean stateRecordedData;
+    private ArrayList<LogListener> mailingListLogListeners;
 
     private static Club instance = new Club();
 
@@ -43,6 +47,8 @@ public class Club implements Serializable
         listeRencontres = new ArrayList<>();
         stateRecordedData = true;
 
+        mailingListLogListeners = new ArrayList<>();
+
         listeEquipesClub.add(new Equipe(1, "Les fumiers", 2, "Liège", "Homme"));
         listeEquipesClub.add(new Equipe(2, "Les handicapés", 3, "Namur", "Femme"));
         listeEquipesClub.add(new Equipe(3, "Les zinzins", 1, "Liège", "Vétéran"));
@@ -50,6 +56,52 @@ public class Club implements Serializable
         listeEquipesAdverses.add(new Equipe(4, "Les Sylvatiens", 5, "Luxembourg", "Femme"));
         listeEquipesAdverses.add(new Equipe(5, "Les Blegnytois", 1, "Liège", "Homme"));
         listeEquipesAdverses.add(new Equipe(6, "Les Noa", 2, "Cheratte", "Vétéran"));
+    }
+
+    public void ajouteJoueur(Joueur j)
+    {
+        listeJoueursClub.add(j);
+        notifyLogDetected("Ajout d'un joueur: ", j);
+    }
+
+    public void modifierJoueur(Joueur ancien, Joueur nouveau)
+    {
+        notifyLogDetected("Modification d'un joueur - anciennes données: ", ancien);
+        notifyLogDetected("Modification d'un joueur - nouvelles données: ", nouveau);
+
+        try
+        {
+            ancien.setNom(nouveau.getNom());
+            ancien.setPrenom(nouveau.getPrenom());
+            ancien.setDateNaissance(nouveau.getDateNaissance());
+            ancien.setNumRegistreNational(nouveau.getNumRegistreNational());
+            ancien.setAdresse(nouveau.getAdresse());
+            ancien.setSexe(nouveau.getSexe());
+            ancien.setClassement(nouveau.getClassement());
+            ancien.setListeForce(nouveau.getListeForce());
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public void ajouteStaff(Staff s)
+    {
+        listeStaffClub.add(s);
+        notifyLogDetected("Ajout d'un staff: ", s);
+    }
+
+    public void ajouteRencontre(Rencontre r)
+    {
+        listeRencontres.add(r);
+        notifyLogDetected("Ajout d'une rencontre: ", r);
+    }
+
+    public void ajouteEquipe(Equipe e)
+    {
+        listeEquipesClub.add(e);
+        notifyLogDetected("Ajout d'une éuqipe: ", e);
     }
 
     public void Save() throws IOException
@@ -159,5 +211,55 @@ public class Club implements Serializable
 
             oos.close();
         }
+    }
+
+    public void addLogListener(LogListener listener)
+    {
+        if(!mailingListLogListeners.contains(listener))
+        {
+            mailingListLogListeners.add(listener);
+        }
+    }
+
+    public void removeLogListener(LogListener listener)
+    {
+        if(mailingListLogListeners.contains(listener))
+        {
+            mailingListLogListeners.remove(listener);
+        }
+    }
+
+    private void notifyLogDetected(String msg, Object obj)
+    {
+        String log = createLog(msg, obj);
+
+        LogEvent e = new LogEvent(this, log);
+        for(int i=0; i < mailingListLogListeners.size(); i++)
+        {
+            LogListener listener = mailingListLogListeners.get(i);
+            listener.logDetected(e);
+        }
+    }
+
+    private String createLog(String msg, Object obj)
+    {
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, Locale.FRANCE);
+        String log;
+
+        if(obj instanceof Personne) {
+            Personne p = (Personne)obj;
+            log = "[" + df.format(Calendar.getInstance().getTime()) + "] " + msg + " [NumeroRegistreNational = " + p.getNumRegistreNational() + "] [Nom = " + p.getNom() + "] [Prénom = " + p.getPrenom() + "]";
+        }
+        else if(obj instanceof Equipe) {
+            Equipe e = (Equipe)obj;
+            log = "[" + df.format(Calendar.getInstance().getTime()) + "] " + msg + "[NumeroEquipe = " + e.getNumEquipe() + "] [NomEquipe = " + e.getNomEquipe() + "]";
+        }
+        else {
+            Rencontre r = (Rencontre)obj;
+            String dateDebut = df.format(r.getDateDebut().getTime());
+            log = "[" + df.format(Calendar.getInstance().getTime()) + "] " + msg +  "[EquipeLocale = " + r.getLocaux().getNomEquipe() + "] [EquipeVisiteuse = " + r.getVisiteurs().getNomEquipe() + "] [DateDebut = " + dateDebut + "]";
+        }
+
+        return log;
     }
 }

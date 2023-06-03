@@ -58,7 +58,7 @@ public class DialogAjoutResultatsRencontre extends JDialog implements ActionList
 
         String jLocalToString = joueurLocal.getNom() + " " + joueurLocal.getPrenom();
         tf_joueurLocal.setText(jLocalToString);
-        tf_joueurLocal.setEnabled(false);
+        tf_joueurLocal.setEditable(false);
 
         Joueur j;
         for(int i=0; i<4; i++)

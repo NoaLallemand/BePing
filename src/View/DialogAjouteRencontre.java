@@ -269,8 +269,6 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
                         for(int k = l, m = 0; k < (l+4); k++, m++)
                         {
                             resultatsMatchs[k] = quatreResultatsMatchs[m];
-
-                            System.out.println(resultatsMatchs[k].toString());
                         }
                     }
                     else

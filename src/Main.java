@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
+import LogBean.RecepteurLog;
 import Model.*;
 import View.*;
 import Controler.*;
@@ -26,6 +27,7 @@ public class Main {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
+        RecepteurLog recepteurLogs = new RecepteurLog(Club.getClubInstance());
         MainView fenetrePrincipale = new MainView();
         Controleur controleur = new Controleur(fenetrePrincipale, Club.getClubInstance());
         fenetrePrincipale.setControleur(controleur);
