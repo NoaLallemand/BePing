@@ -75,6 +75,14 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         if(e.getSource() == mainView.getViewEquipes().getBtnAjouterEquipe()) {
             onNouvelleEquipe();
         }
+        if (e.getSource() == mainView.getViewEquipes().getBtnModifierEquipeButton())
+        {
+            onModifierEquipe();
+        }
+        if (e.getSource() == mainView.getViewEquipes().getBtnSupprimerEquipeButton()){
+            onSupprimerEquipe();
+        }
+
     }
 
     //Méthode exécutée lors d'un changement d'élément sélectionné dans la JTable des joueurs pour actualiser l'affichage
@@ -293,5 +301,61 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
     public void onNouvelleEquipe()
     {
         DialogAjouteEquipe d = new DialogAjouteEquipe(mainView,true);
+        if(d.isOk())
+        {
+            Equipe e = d.getEquipe();
+            singleton.getListeEquipesClub().add(e);
+
+            JTable t = mainView.getViewEquipes().getTableEquipes();
+            ((AbstractTableModel)(t.getModel())).fireTableRowsInserted(t.getRowCount()-1, t.getRowCount()-1);
+
+            singleton.setStateRecordedData(false);
+        }
+        d.dispose();
+    }
+
+    public void onModifierEquipe()
+    {
+        int indexSelectedRow;
+        JTable refTableEquipe = mainView.getViewEquipes().getTableEquipes();
+        if( ((indexSelectedRow = refTableEquipe.getSelectedRow()) != -1) && (refTableEquipe.getRowCount() > 0) )
+        {
+            Equipe e = singleton.getListeEquipesClub().get(indexSelectedRow);
+            DialogAjouteEquipe d = new DialogAjouteEquipe(mainView, true, e, indexSelectedRow);
+            if(d.isOk())
+            {
+                Equipe equipeModif = d.getEquipe();
+                e.setNumEquipe(equipeModif.getNumEquipe());
+                e.setCategorie(equipeModif.getCategorie());
+                e.setNomEquipe(equipeModif.getNomEquipe());
+                e.setDivision(equipeModif.getDivision());
+                e.setRegion(equipeModif.getRegion());
+
+                ((AbstractTableModel)(refTableEquipe.getModel())).fireTableRowsUpdated(indexSelectedRow, indexSelectedRow);
+                singleton.setStateRecordedData(false);
+            }
+            d.dispose();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Aucune équipe n'est sélectionnée...Veuillez sélectionner l'équipe que vous voulez modifier.");
+        }
+    }
+
+    public void onSupprimerEquipe()
+    {
+        int indexSelectedRow;
+        JTable refTableS = mainView.getViewEquipes().getTableEquipes();
+
+        if( ((indexSelectedRow = refTableS.getSelectedRow()) != -1) && (refTableS.getRowCount() > 0) )
+        {
+            singleton.getListeEquipesClub().remove(indexSelectedRow);
+            mainView.repaint();
+            singleton.setStateRecordedData(false);
+            //((AbstractTableModel)refTableS.getModel()).fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Aucune équipe n'est sélectionnée...veuillez sélectionner l'équipe que vous souhaitez supprimer.");
+        }
     }
 }

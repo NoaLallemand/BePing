@@ -1,6 +1,9 @@
 package View;
 
 import Controler.Controleur;
+import Model.Club;
+import View.JTableModel.EquipeJTableModel;
+import View.JTableModel.JoueursJTableModel;
 
 import javax.swing.*;
 
@@ -16,6 +19,8 @@ public class ViewEquipes {
 
     public JPanel getEquipesPanel() { return EquipesPanel; }
 
+    public JTable getTableEquipes() {return tableEquipes;}
+
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Equipes");
@@ -25,8 +30,25 @@ public class ViewEquipes {
     }
 
     public JButton getBtnAjouterEquipe() {return ajouterEquipeButton;}
+
+    public JButton getBtnModifierEquipeButton(){return  modifierEquipeButton;}
+
+    public  JButton getBtnSupprimerEquipeButton(){return supprimerEquipeButton;}
     public void setControleur(Controleur c)
     {
         ajouterEquipeButton.addActionListener(c);
+        modifierEquipeButton.addActionListener(c);
+        supprimerEquipeButton.addActionListener(c);
+    }
+
+    public void setTableModelForTableEquipes()
+    {
+        EquipeJTableModel equipesTableModel = new EquipeJTableModel(Club.getClubInstance().getListeEquipesClub());
+        tableEquipes = new JTable(equipesTableModel);
+    }
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        setTableModelForTableEquipes();
+
     }
 }
