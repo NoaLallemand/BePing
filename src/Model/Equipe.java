@@ -5,31 +5,57 @@ import java.util.Objects;
 
 public class Equipe implements Serializable
 {
+    public static int numEquipeCourant = 1;
+
     private int numEquipe;
     private String nomEquipe;
     private int division;
     private  String region;
     private  String categorie;
 
-    public Equipe(int numEquipe ,String nomEquipe, int division, String region, String categorie) {
-        setNumEquipe(numEquipe);
-        setNomEquipe(nomEquipe);
-        setDivision(division);
-        setRegion(region);
-        setCategorie(categorie);
+    public Equipe(int numEquipe ,String nomEquipe, int division, String region, String categorie) throws Exception
+    {
+        try
+        {
+            setNumEquipe(numEquipe);
+            setNomEquipe(nomEquipe);
+            setDivision(division);
+            setRegion(region);
+            setCategorie(categorie);
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
     }
 
     public int getNumEquipe() {return numEquipe;}
     public void setNumEquipe(int numEquipe) {this.numEquipe = numEquipe;}
 
     public String getNomEquipe() {return nomEquipe;}
-    public void setNomEquipe(String nomEquipe) {this.nomEquipe = nomEquipe;}
+    public void setNomEquipe(String nomEquipe) throws Exception
+    {
+        if(nomEquipe.length() > 0) {
+            this.nomEquipe = nomEquipe;
+        }
+        else {
+            throw new Exception("Le nom de l'équipe est requis!");
+        }
+    }
 
     public int getDivision() {return division;}
     public void setDivision(int division) {this.division = division;}
 
     public String getRegion() {return region;}
-    public void setRegion(String region) {this.region = region;}
+    public void setRegion(String region) throws Exception
+    {
+        if(region.length() > 0) {
+            this.region = region;
+        }
+        else {
+            throw new Exception("La région de l'équipe doit être connue!");
+        }
+    }
 
     public String getCategorie() {return categorie;}
     public void setCategorie(String categorie) {this.categorie = categorie;}
@@ -55,10 +81,10 @@ public class Equipe implements Serializable
 
     public static void main(String Args[])
     {
-        Equipe monEquipe = new Equipe(1,"DreamTeam",5,"Liège","Homme");
+        /*Equipe monEquipe = new Equipe(1,"DreamTeam",5,"Liège","Homme");
         System.out.println(monEquipe.toString());
         Equipe monEquipe1 = monEquipe;
 
-        System.out.println(monEquipe.equals(monEquipe1));
+        System.out.println(monEquipe.equals(monEquipe1));*/
     }
 }

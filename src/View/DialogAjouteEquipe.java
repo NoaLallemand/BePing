@@ -63,13 +63,13 @@ public class DialogAjouteEquipe extends JDialog{
                 categorie = (String) cb_Categorie.getSelectedItem();
 
                 try {
-                    equipe = new Equipe(1, nom, divison, region, categorie);
+                    equipe = new Equipe(Equipe.numEquipeCourant, nom, divison, region, categorie);
                     ok = true;
                     setVisible(false);
                 }
                 catch (Exception exception)
                 {
-
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur lors de l'encodage d'une nouvellle équipe", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -103,9 +103,10 @@ public class DialogAjouteEquipe extends JDialog{
         ajouterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
+                try
+                {
                     recupereContenuFormulaire();
-                    equipe = new Equipe(1,nom,divison,region,categorie);
+                    equipe = new Equipe(donneesAncienEquipe.getNumEquipe(), nom,divison,region,categorie);
                     if(equipe.equals(donneesAncienEquipe))
                     {
                         throw new Exception("Modification impossible! Les nouvelles données de l'équipe sont identiques aux anciennes données...\nVeuillez modifier au moins un champ avant de confirmer la modification");
@@ -115,8 +116,10 @@ public class DialogAjouteEquipe extends JDialog{
                         ok = true;
                         setVisible(false);
                     }
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
+                }
+                catch (Exception ex)
+                {
+                    JOptionPane.showMessageDialog(null,  ex.getMessage(), "Erreur lors de la modification d'une équipe", JOptionPane.ERROR_MESSAGE);
                 }
 
             }
@@ -153,7 +156,6 @@ public class DialogAjouteEquipe extends JDialog{
 
     private void recupereContenuFormulaire() throws Exception
     {
-
         nom = textField_Nom.getText();
         divison = cb_Division.getSelectedIndex()+1;
         region = textField_Region.getText();

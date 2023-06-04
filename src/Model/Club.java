@@ -49,13 +49,13 @@ public class Club implements Serializable
 
         mailingListLogListeners = new ArrayList<>();
 
-        listeEquipesClub.add(new Equipe(1, "Les fumiers", 2, "Liège", "Hommes"));
+        /*listeEquipesClub.add(new Equipe(1, "Les fumiers", 2, "Liège", "Hommes"));
         listeEquipesClub.add(new Equipe(2, "Les handicapés", 3, "Namur", "Femmes"));
-        listeEquipesClub.add(new Equipe(3, "Les zinzins", 1, "Liège", "Vétérans"));
+        listeEquipesClub.add(new Equipe(3, "Les zinzins", 1, "Liège", "Vétérans"));*/
 
-        listeEquipesAdverses.add(new Equipe(4, "Les Sylvatiens", 5, "Luxembourg", "Femmes"));
-        listeEquipesAdverses.add(new Equipe(5, "Les Blegnytois", 1, "Liège", "Hommes"));
-        listeEquipesAdverses.add(new Equipe(6, "Les Noa", 2, "Cheratte", "Vétérans"));
+        /*listeEquipesAdverses.add(new Equipe(4, "Les Sylvatiens", 5, "Luxembourg", "Femme"));
+        listeEquipesAdverses.add(new Equipe(5, "Les Blegnytois", 1, "Liège", "Homme"));
+        listeEquipesAdverses.add(new Equipe(6, "Les Noa", 2, "Cheratte", "Vétéran"));*/
     }
 
     public void ajouteJoueur(Joueur j)
@@ -136,11 +136,46 @@ public class Club implements Serializable
     public void ajouteEquipe(Equipe e)
     {
         listeEquipesClub.add(e);
+        Equipe.numEquipeCourant++;
+
         notifyLogDetected("Ajout d'une éuqipe: ", e);
+    }
+
+    public void modifierEquipe(Equipe ancien, Equipe nouveau)
+    {
+        notifyLogDetected("Modification d'une equipe - anciennes données: ", ancien);
+        notifyLogDetected("Modification d'une equipe - nouvelles données: ", nouveau);
+
+        try
+        {
+            ancien.setNumEquipe(nouveau.getNumEquipe());
+            ancien.setCategorie(nouveau.getCategorie());
+            ancien.setNomEquipe(nouveau.getNomEquipe());
+            ancien.setDivision(nouveau.getDivision());
+            ancien.setRegion(nouveau.getRegion());
+        }
+        catch(Exception e)
+        {
+            System.out.println("Erreur lors de la tentative de mise à jour des données d'une équipe");
+        }
+
+    }
+
+    public void supprimeEquipe(int indice)
+    {
+        Equipe e = listeEquipesClub.get(indice);
+        notifyLogDetected("Suppression d'une équipe: ", e);
+        listeEquipesClub.remove(indice);
     }
 
     public void Save() throws IOException
     {
+        //Sauvegarder le numéro d'équipe courant
+        Properties prop = new Properties();
+        prop.setProperty("numEquipe", String.valueOf(Equipe.numEquipeCourant));
+        FileOutputStream fileOutputStream = new FileOutputStream("numEquipeCourant.properties", false);
+        prop.store(fileOutputStream, "Prochain numéro d'équipe");
+
         try
         {
             FileOutputStream fos = new FileOutputStream("BePing.club", false);
@@ -211,6 +246,19 @@ public class Club implements Serializable
             listeJoueursAdverses.add(j);
         }
         br.close();
+
+        try
+        {
+            Properties prop = new Properties();
+            prop.load(new FileInputStream("numEquipeCourant.properties"));
+            String numEquipe = (String) prop.get("numEquipe");
+            Equipe.numEquipeCourant = Integer.parseInt(numEquipe);
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println("Le fichier properties n'existe pas pour l'instant...");
+        }
+
 
         File f = new File("BePing.club");
         if(!f.exists())

@@ -159,7 +159,9 @@
                             <preferred-size width="150" height="-1"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <editable value="false"/>
+                        </properties>
                       </component>
                       <component id="bc3b2" class="javax.swing.JTextField" binding="tf_dateFin">
                         <constraints>
@@ -167,7 +169,9 @@
                             <preferred-size width="150" height="-1"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <editable value="false"/>
+                        </properties>
                       </component>
                       <component id="ce7f1" class="javax.swing.JLabel">
                         <constraints>
@@ -192,6 +196,7 @@
                           </grid>
                         </constraints>
                         <properties>
+                          <editable value="false"/>
                           <text value=""/>
                         </properties>
                       </component>
@@ -201,7 +206,9 @@
                             <preferred-size width="150" height="-1"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <editable value="false"/>
+                        </properties>
                       </component>
                     </children>
                   </grid>
@@ -253,7 +260,9 @@
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
-                            <properties/>
+                            <properties>
+                              <editable value="false"/>
+                            </properties>
                           </component>
                           <component id="474ec" class="javax.swing.JLabel">
                             <constraints>
@@ -269,7 +278,9 @@
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
-                            <properties/>
+                            <properties>
+                              <editable value="false"/>
+                            </properties>
                           </component>
                           <component id="cc45c" class="javax.swing.JLabel">
                             <constraints>
@@ -286,6 +297,7 @@
                               </grid>
                             </constraints>
                             <properties>
+                              <editable value="false"/>
                               <text value=""/>
                             </properties>
                           </component>
@@ -303,7 +315,9 @@
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
-                            <properties/>
+                            <properties>
+                              <editable value="false"/>
+                            </properties>
                           </component>
                         </children>
                       </grid>
@@ -339,7 +353,9 @@
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
-                            <properties/>
+                            <properties>
+                              <editable value="false"/>
+                            </properties>
                           </component>
                           <component id="d75f" class="javax.swing.JLabel">
                             <constraints>
@@ -355,7 +371,9 @@
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
-                            <properties/>
+                            <properties>
+                              <editable value="false"/>
+                            </properties>
                           </component>
                           <component id="65c0a" class="javax.swing.JLabel">
                             <constraints>
@@ -371,7 +389,9 @@
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
-                            <properties/>
+                            <properties>
+                              <editable value="false"/>
+                            </properties>
                           </component>
                           <component id="17d0f" class="javax.swing.JLabel">
                             <constraints>
@@ -387,7 +407,9 @@
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
-                            <properties/>
+                            <properties>
+                              <editable value="false"/>
+                            </properties>
                           </component>
                         </children>
                       </grid>
@@ -789,7 +811,7 @@
                               <text value="ScoreVisiteurs"/>
                             </properties>
                           </component>
-                          <component id="1e2fe" class="javax.swing.JLabel" binding="lab_joueurVisiteur1">
+                          <component id="1e2fe" class="javax.swing.JLabel" binding="lab_joueurVisiteur41">
                             <constraints>
                               <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>

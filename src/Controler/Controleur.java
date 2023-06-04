@@ -92,25 +92,484 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
     //Méthode exécutée lors d'un changement d'élément sélectionné dans la JTable des joueurs pour actualiser l'affichage
     //des informations détaillées du joueur.
     @Override
-    public void valueChanged(ListSelectionEvent e) {
+    public void valueChanged(ListSelectionEvent e)
+    {
+        if(e.getSource() == mainView.getViewMembres().getTableJoueurs().getSelectionModel() || e.getSource() == this)
+        {
+            ViewMembres vueMembres = mainView.getViewMembres();
+            int indice = vueMembres.getTableJoueurs().getSelectedRow();
+            Joueur j = singleton.getListeJoueursClub().get(indice);
 
-        ViewMembres vueMembres = mainView.getViewMembres();
-        int indice = vueMembres.getTableJoueurs().getSelectedRow();
-        Joueur j = singleton.getListeJoueursClub().get(indice);
+            vueMembres.setTextOn_textField_Nom(j.getNom());
+            vueMembres.setTextOn_textField_Prenom(j.getPrenom());
+            vueMembres.setTextOn_textField_NumRegNat(j.getNumRegistreNational());
+            vueMembres.setTextOn_textField_Adresse(j.getAdresse());
+            vueMembres.setTextOn_textField_Classement(j.getClassement());
+            vueMembres.setTextOn_textField_Sexe(j.getSexe());
 
-        vueMembres.setTextOn_textField_Nom(j.getNom());
-        vueMembres.setTextOn_textField_Prenom(j.getPrenom());
-        vueMembres.setTextOn_textField_NumRegNat(j.getNumRegistreNational());
-        vueMembres.setTextOn_textField_Adresse(j.getAdresse());
-        vueMembres.setTextOn_textField_Classement(j.getClassement());
-        vueMembres.setTextOn_textField_Sexe(j.getSexe());
+            String listeForce = Integer.toString(j.getListeForce());
+            vueMembres.setTextOn_textField_LForce(listeForce);
 
-        String listeForce = Integer.toString(j.getListeForce());
-        vueMembres.setTextOn_textField_LForce(listeForce);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+            String dateFormatee = sdf.format(j.getDateNaissance().getTime());
+            vueMembres.setTextOn_textField_DateNaissance(dateFormatee);
+        }
+        else
+        {
+            ViewEquipes vueEquipes = mainView.getViewEquipes();
+            int indice = vueEquipes.getTableRencontres().getSelectedRow();
+            Rencontre r = singleton.getListeRencontres().get(indice);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
-        String dateFormatee = sdf.format(j.getDateNaissance().getTime());
-        vueMembres.setTextOn_textField_DateNaissance(dateFormatee);
+            DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.FRANCE);
+            vueEquipes.tf_dateDebut.setText(df.format(r.getDateDebut().getTime()));
+            vueEquipes.tf_dateFin.setText(df.format(r.getDateFin().getTime()));
+
+            vueEquipes.tf_equipeLocale.setText(r.getLocaux().getNomEquipe());
+            vueEquipes.tf_equipeVisiteuse.setText(r.getVisiteurs().getNomEquipe());
+
+            Joueur[] tabJoueursLocaux = r.getJoueursLocaux();
+            Joueur[] tabJoueursVisiteurs = r.getJoueursVisiteurs();
+            Joueur j;
+            for(int i=0; i < tabJoueursLocaux.length; i++) {
+
+                JTextField tf = recupTextFieldJoueursLocaux(i+1);
+                j = tabJoueursLocaux[i];
+                String contenu = j.getNom() + " " + j.getPrenom();
+                tf.setText(contenu);
+            }
+
+            for(int i=0; i< tabJoueursVisiteurs.length; i++)
+            {
+                JTextField tf = recupTexteFieldJoueurVisiteur(i+1);
+                j = tabJoueursVisiteurs[i];
+                String contenu = j.getNom() + " " +j.getPrenom();
+                tf.setText(contenu);
+            }
+
+            JLabel label;
+            ResultatMatch[] resultatsMatchs = r.getResultat();
+            int score;
+            for(int numPanel = 1; numPanel < 5; numPanel++)
+            {
+                for(int i=0; i < 4; i++)
+                {
+                    for(int k=0; k < 4; k++)
+                    {
+                        label = recupLabelScore(numPanel, i, k);
+                        switch(k)
+                        {
+                            case 0:
+                                j = tabJoueursLocaux[numPanel-1];
+                                label.setText(j.getNom() + " " + j.getPrenom());
+                                break;
+
+                            case 1:
+                                score = resultatsMatchs[i + (4 * (numPanel-1))].getScoreLocaux();
+                                label.setText(String.valueOf(score));
+                                break;
+
+                            case 2:
+                                score = resultatsMatchs[i + (4 * (numPanel-1))].getScoreVisiteurs();
+                                label.setText(String.valueOf(score));
+                                break;
+
+                            case 3:
+                                j = tabJoueursVisiteurs[i];
+                                label.setText(j.getNom() + " " + j.getPrenom());
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private JLabel recupLabelScore(int numeroPanel, int ligne, int col)
+    {
+        ViewEquipes vueEquipes = mainView.getViewEquipes();
+        JLabel label = null;
+
+        switch(numeroPanel)
+        {
+            case 1: {
+                switch (ligne) {
+                    //Ligne 1 panel 1
+                    case 0:
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal11;
+                                break;
+
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal11;
+                                break;
+
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur11;
+                                break;
+
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur11;
+                                break;
+                        }
+                        break;
+
+                    //Ligne 2 panel 1
+                    case 1:
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal12;
+                                break;
+
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal12;
+                                break;
+
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur12;
+                                break;
+
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur12;
+                                break;
+                        }
+                        break;
+
+                    //Ligne 3 panel 1
+                    case 2:
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal13;
+                                break;
+
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal13;
+                                break;
+
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur13;
+                                break;
+
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur13;
+                                break;
+                        }
+                        break;
+
+                    case 3:
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal14;
+                                break;
+
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal14;
+                                break;
+
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur14;
+                                break;
+
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur14;
+                                break;
+                        }
+                        break;
+                }
+            }
+            break;
+
+            //Panel 2
+            case 2: {
+                switch (ligne) {
+                    //Ligne 1 panel 2
+                    case 0:
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal21;
+                                break;
+
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal21;
+                                break;
+
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur21;
+                                break;
+
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur21;
+                                break;
+                        }
+                        break;
+
+                    //Ligne 2 panel 1
+                    case 1:
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal22;
+                                break;
+
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal22;
+                                break;
+
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur22;
+                                break;
+
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur22;
+                                break;
+                        }
+                        break;
+
+                    //Ligne 3 panel 1
+                    case 2:
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal23;
+                                break;
+
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal23;
+                                break;
+
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur23;
+                                break;
+
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur23;
+                                break;
+                        }
+                        break;
+
+                    case 3:
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal24;
+                                break;
+
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal24;
+                                break;
+
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur24;
+                                break;
+
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur24;
+                                break;
+                        }
+                        break;
+                }
+            }
+            break;
+
+
+            case 3: {
+                switch (ligne) {
+                    case 0:
+
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal31;
+                                break;
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal31;
+                                break;
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur31;
+                                break;
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur31;
+                                break;
+                        }
+                        break;
+                    case 1:
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal32;
+                                break;
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal32;
+                                break;
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur32;
+                                break;
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur32;
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal33;
+                                break;
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal33;
+                                break;
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur33;
+                                break;
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur33;
+                                break;
+                        }
+                        break;
+                    case 3:
+                        switch (col) {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal34;
+                                break;
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal34;
+                                break;
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur34;
+                                break;
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur34;
+                                break;
+                        }
+                        break;
+                }
+            }
+            break;
+
+
+            case 4:
+            {
+                switch (ligne)
+                {
+                    case 0:
+                        switch (col)
+                        {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal41;
+                                break;
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal41;
+                                break;
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur41;
+                                break;
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur41;
+                                break;
+                        }
+                        break;
+
+                    case 1:
+                        switch (col)
+                        {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal42;
+                                break;
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal42;
+                                break;
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur42;
+                                break;
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur42;
+                                break;
+                        }
+                        break;
+
+                    case 2:
+                        switch (col)
+                        {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal43;
+                                break;
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal43;
+                                break;
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur43;
+                                break;
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur43;
+                                break;
+                        }
+                        break;
+
+                    case 3:
+                        switch (col)
+                        {
+                            case 0:
+                                label = vueEquipes.lab_joueurLocal44;
+                                break;
+                            case 1:
+                                label = vueEquipes.lab_scoreLocal44;
+                                break;
+                            case 2:
+                                label = vueEquipes.lab_scoreVisiteur44;
+                                break;
+                            case 3:
+                                label = vueEquipes.lab_joueurVisiteur44;
+                                break;
+                        }
+                        break;
+                }
+            }
+            break;
+        }
+
+        return label;
+    }
+
+    private JTextField recupTexteFieldJoueurVisiteur(int numTexteField)
+    {
+        JTextField tf = null;
+        ViewEquipes vueEquipes = mainView.getViewEquipes();
+        switch (numTexteField)
+        {
+            case 1:
+                tf = vueEquipes.tf_joueurVisiteur1;
+                break;
+            case 2:
+                tf = vueEquipes.tf_joueurVisiteur2;
+                break;
+            case 3:
+                tf = vueEquipes.tf_joueurVisiteur3;
+                break;
+            case 4:
+                tf = vueEquipes.tf_joueurVisiteur4;
+                break;
+        }
+        return tf;
+    }
+
+    private JTextField recupTextFieldJoueursLocaux(int numeroTextField)
+    {
+        JTextField tf = null;
+        ViewEquipes vueEquipes = mainView.getViewEquipes();
+        switch(numeroTextField)
+        {
+            case 1:
+                tf = vueEquipes.tf_joueurLocal1;
+                break;
+
+            case 2:
+                tf = vueEquipes.tf_joueurLocal2;
+                break;
+
+            case 3:
+                tf = vueEquipes.tf_joueurLocal3;
+                break;
+
+            case 4:
+                tf = vueEquipes.tf_joueurLocal4;
+                break;
+        }
+
+        return tf;
     }
 
     @Override
@@ -281,7 +740,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         if(d.isOk())
         {
             Equipe e = d.getEquipe();
-            singleton.getListeEquipesClub().add(e);
+            singleton.ajouteEquipe(e);
 
             JTable t = mainView.getViewEquipes().getTableEquipes();
             ((AbstractTableModel)(t.getModel())).fireTableRowsInserted(t.getRowCount()-1, t.getRowCount()-1);
@@ -302,11 +761,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
             if(d.isOk())
             {
                 Equipe equipeModif = d.getEquipe();
-                e.setNumEquipe(equipeModif.getNumEquipe());
-                e.setCategorie(equipeModif.getCategorie());
-                e.setNomEquipe(equipeModif.getNomEquipe());
-                e.setDivision(equipeModif.getDivision());
-                e.setRegion(equipeModif.getRegion());
+                singleton.modifierEquipe(e, equipeModif);
 
                 ((AbstractTableModel)(refTableEquipe.getModel())).fireTableRowsUpdated(indexSelectedRow, indexSelectedRow);
                 singleton.setStateRecordedData(false);
@@ -326,8 +781,8 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
 
         if( ((indexSelectedRow = refTableS.getSelectedRow()) != -1) && (refTableS.getRowCount() > 0) )
         {
-            singleton.getListeEquipesClub().remove(indexSelectedRow);
-            mainView.repaint();
+            singleton.supprimeEquipe(indexSelectedRow);
+            refTableS.repaint();
             singleton.setStateRecordedData(false);
             //((AbstractTableModel)refTableS.getModel()).fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
         }

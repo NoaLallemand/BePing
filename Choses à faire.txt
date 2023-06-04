@@ -7,4 +7,6 @@
 + Finir l'utilisation du bean log
 
 - Importer un jar libraire existant et utiliser une des fonctionnalités.
-- Réaliser une petite boîte de dialogue dans l'onglet paramètres afin de pouvoir changer un paramètre de l'application et le sauvegarder dans un fichier properties.
+
++ Fichier Properties pour l'incrémentation du numéro d'équipe.
+- Créer des équipes adverses dans un fichier csv.

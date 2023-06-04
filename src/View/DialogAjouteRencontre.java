@@ -87,12 +87,12 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
         joueursVisiteursSelectionnes = new Joueur[4];
         resultatsMatchs = new ResultatMatch[16];
 
-        cbBox_CategorieEquipe.addItem("Hommes");
-        cbBox_CategorieEquipe.addItem("Femmes");
-        cbBox_CategorieEquipe.addItem("Vétérans");
+        cbBox_CategorieEquipe.addItem("Homme");
+        cbBox_CategorieEquipe.addItem("Femme");
+        cbBox_CategorieEquipe.addItem("Vétéran");
 
         cbBox_CategorieEquipe.addActionListener(this);
-        remplirComboboxEquipesDisponibles("Hommes");
+        remplirComboboxEquipesDisponibles("Homme");
     }
 
     private void remplirComboboxEquipesDisponibles(String categrieEquipeSelectionne)
@@ -128,7 +128,7 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
         }
 
         if(cbBox_EquipeVisiteuse.getItemCount() == 0) {
-            String message = "Aucune équipe locale n'appartient à la catégorie \"" + categrieEquipeSelectionne + "\"";
+            String message = "Aucune équipe visiteuse n'appartient à la catégorie \"" + categrieEquipeSelectionne + "\"";
             JOptionPane.showMessageDialog(null, message);
         }
     }
@@ -138,10 +138,10 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
         ArrayList<String> listeJoueursDispo = new ArrayList<>();
 
         String categorieEquipe = (String) cbBox_CategorieEquipe.getSelectedItem();
-        if(categorieEquipe.equals("Hommes") || categorieEquipe.equals("Femmes"))
+        if(categorieEquipe.equals("Homme") || categorieEquipe.equals("Femme"))
         {
             String sexeRecherche;
-            if(categorieEquipe.equals("Hommes")){
+            if(categorieEquipe.equals("Homme")){
                 sexeRecherche = "Homme";
             }
             else {
@@ -217,7 +217,7 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
                             }
                             else {
 
-                                dateFinRencontre.setTime(d);
+                                dateFinRencontre.setTime(d1);
                                 nouvelleRencontre = new Rencontre(equipeLocaleSelectionnee, equipeVisiteuseSelectionne, joueursLocauxSelectionnes, joueursVisiteursSelectionnes, resultatsMatchs, dateDebutRencontre, dateFinRencontre);
 
                                 ok = true;
