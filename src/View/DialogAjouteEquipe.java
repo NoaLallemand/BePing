@@ -42,9 +42,9 @@ public class DialogAjouteEquipe extends JDialog{
         cb_Division.addItem("Division 6");
         cb_Division.addItem("Division 7");
 
-        cb_Categorie.addItem("Homme");
-        cb_Categorie.addItem("Femme");
-        cb_Categorie.addItem("Vétéran");
+        cb_Categorie.addItem("Hommes");
+        cb_Categorie.addItem("Femmes");
+        cb_Categorie.addItem("Vétérans");
 
         ajouterButton.addActionListener(new ActionListener() {
             @Override

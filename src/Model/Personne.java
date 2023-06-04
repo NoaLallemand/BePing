@@ -109,7 +109,7 @@ public class Personne implements Serializable
                 case 0:
                 {
                     int anneeNais;
-                    if ( (anneeNais = dateNaissance.get(GregorianCalendar.YEAR)) > 2000)
+                    if ( (anneeNais = dateNaissance.get(GregorianCalendar.YEAR)) >= 2000)
                         anneeNais -= 2000;
                     else
                         anneeNais -= 1900;

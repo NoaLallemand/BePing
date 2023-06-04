@@ -8,8 +8,10 @@ import Model.ResultatMatch;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.time.Period;
 import java.util.*;
 
 public class DialogAjouteRencontre extends JDialog implements ActionListener
@@ -23,6 +25,7 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
     private JComboBox cbBox_EquipeLocale;
     private JComboBox cbBox_EquipeVisiteuse;
     private JPanel mainPanel;
+    private JComboBox cbBox_CategorieEquipe;
 
     private boolean ok;
     private boolean isButtonEncoderJoueursClicked;
@@ -84,22 +87,98 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
         joueursVisiteursSelectionnes = new Joueur[4];
         resultatsMatchs = new ResultatMatch[16];
 
+        cbBox_CategorieEquipe.addItem("Hommes");
+        cbBox_CategorieEquipe.addItem("Femmes");
+        cbBox_CategorieEquipe.addItem("Vétérans");
+
+        cbBox_CategorieEquipe.addActionListener(this);
+        remplirComboboxEquipesDisponibles("Hommes");
+    }
+
+    private void remplirComboboxEquipesDisponibles(String categrieEquipeSelectionne)
+    {
+        if(cbBox_EquipeLocale.getItemCount() > 0) {
+            cbBox_EquipeLocale.removeAllItems();
+        }
+
+        if(cbBox_EquipeVisiteuse.getItemCount() > 0) {
+            cbBox_EquipeVisiteuse.removeAllItems();
+        }
+
+        Equipe eq;
         for(int i=0; i < listeEquipesClub.size(); i++)
         {
-            Equipe e = listeEquipesClub.get(i);
-            cbBox_EquipeLocale.addItem(e.getNomEquipe());
+            eq = listeEquipesClub.get(i);
+            if(eq.getCategorie().equals(categrieEquipeSelectionne)) {
+                cbBox_EquipeLocale.addItem(eq.getNomEquipe());
+            }
+        }
+
+        if(cbBox_EquipeLocale.getItemCount() == 0) {
+            String message = "Aucune équipe locale n'appartient à la catégorie \"" + categrieEquipeSelectionne + "\"";
+            JOptionPane.showMessageDialog(null, message);
         }
 
         for(int i=0; i < listeEquipesAdverses.size(); i++)
         {
-            Equipe e = listeEquipesAdverses.get(i);
-            cbBox_EquipeVisiteuse.addItem(e.getNomEquipe());
+            eq = listeEquipesAdverses.get(i);
+            if(eq.getCategorie().equals(categrieEquipeSelectionne)) {
+                cbBox_EquipeVisiteuse.addItem(eq.getNomEquipe());
+            }
         }
+
+        if(cbBox_EquipeVisiteuse.getItemCount() == 0) {
+            String message = "Aucune équipe locale n'appartient à la catégorie \"" + categrieEquipeSelectionne + "\"";
+            JOptionPane.showMessageDialog(null, message);
+        }
+    }
+
+    private ArrayList<String> creeListeJoueursDisponibles(ArrayList<Joueur> listeJoueursInitiale)
+    {
+        ArrayList<String> listeJoueursDispo = new ArrayList<>();
+
+        String categorieEquipe = (String) cbBox_CategorieEquipe.getSelectedItem();
+        if(categorieEquipe.equals("Hommes") || categorieEquipe.equals("Femmes"))
+        {
+            String sexeRecherche;
+            if(categorieEquipe.equals("Hommes")){
+                sexeRecherche = "Homme";
+            }
+            else {
+                sexeRecherche = "Femme";
+            }
+
+            for(int i=0; i < listeJoueursInitiale.size(); i++)
+            {
+                Joueur j = listeJoueursInitiale.get(i);
+                if(j.getSexe().equals(sexeRecherche))
+                {
+                    String res = j.getNumRegistreNational() + "   |   " + j.getNom() + "  " + j.getPrenom();
+                    listeJoueursDispo.add(res);
+                }
+            }
+        }
+        else
+        {
+            for(int i=0; i < listeJoueursInitiale.size(); i++)
+            {
+                Joueur j = listeJoueursInitiale.get(i);
+                String res = j.getNumRegistreNational() + "   |   " + j.getNom() + "  " + j.getPrenom();
+                listeJoueursDispo.add(res);
+            }
+        }
+
+        return listeJoueursDispo;
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        if(e.getSource() == cbBox_CategorieEquipe) {
+            String categorieEquipe = (String)cbBox_CategorieEquipe.getSelectedItem();
+            remplirComboboxEquipesDisponibles(categorieEquipe);
+        }
+
         if(e.getSource() == annulerButton) {
             setVisible(false);
         }
@@ -108,29 +187,53 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
         {
             if(isButtonEncoderJoueursClicked && isButtonEncoderResultatsClicked)
             {
-                int indiceItemSelectionne = cbBox_EquipeLocale.getSelectedIndex();
-                equipeLocaleSelectionnee = listeEquipesClub.get(indiceItemSelectionne);
-
-                indiceItemSelectionne = cbBox_EquipeVisiteuse.getSelectedIndex();
-                equipeVisiteuseSelectionne = listeEquipesAdverses.get(indiceItemSelectionne);
-
-                try
+                if(cbBox_EquipeLocale.getItemCount() > 0 && cbBox_EquipeVisiteuse.getItemCount() > 0)
                 {
-                    DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.FRANCE);
-                    Date d = df.parse(textField_debutRencontre.getText());
-                    dateDebutRencontre.setTime(d);
+                    int indiceItemSelectionne = cbBox_EquipeLocale.getSelectedIndex();
+                    equipeLocaleSelectionnee = listeEquipesClub.get(indiceItemSelectionne);
 
-                    d = df.parse(textField_FinRencontre.getText());
-                    dateFinRencontre.setTime(d);
+                    indiceItemSelectionne = cbBox_EquipeVisiteuse.getSelectedIndex();
+                    equipeVisiteuseSelectionne = listeEquipesAdverses.get(indiceItemSelectionne);
 
-                    nouvelleRencontre = new Rencontre(equipeLocaleSelectionnee, equipeVisiteuseSelectionne, joueursLocauxSelectionnes, joueursVisiteursSelectionnes, resultatsMatchs, dateDebutRencontre, dateFinRencontre);
+                    try
+                    {
+                        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT,Locale.FRANCE);
+                        Date d = df.parse(textField_debutRencontre.getText());
+                        Date now = Calendar.getInstance().getTime();
 
-                    ok = true;
-                    setVisible(false);
+                        System.out.println("date debut = " + d);
+                        System.out.println("Ajd = " + now);
+
+
+                        if(d.compareTo(now) < 0) {
+                            JOptionPane.showMessageDialog(null, "La date du début de la rencontre ne peut pas être inférieure à la date du jour!", "Début de la rencontre invalide", JOptionPane.ERROR_MESSAGE);
+                        }
+                        else {
+                            dateDebutRencontre.setTime(d);
+
+                            Date d1 = df.parse(textField_FinRencontre.getText());
+                            if(d1.compareTo(d) <= 0){
+                                JOptionPane.showMessageDialog(null, "La date de fin de la rencontre ne peut pas être inférieure à la date du jour!", "Fin de la rencontre invalide", JOptionPane.ERROR_MESSAGE);
+                            }
+                            else {
+
+                                dateFinRencontre.setTime(d);
+                                nouvelleRencontre = new Rencontre(equipeLocaleSelectionnee, equipeVisiteuseSelectionne, joueursLocauxSelectionnes, joueursVisiteursSelectionnes, resultatsMatchs, dateDebutRencontre, dateFinRencontre);
+
+                                ok = true;
+                                setVisible(false);
+                            }
+                        }
+
+                    }
+                    catch(ParseException exception)
+                    {
+                        JOptionPane.showMessageDialog(null,  "Le format de la date de début de rencontre ou de la date de fin de reoncontre est invalide!\nVeuillez respecter le format JJ/MM/YYYY HH:MI", "Date de la rencontre invalide", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
-                catch(ParseException exception)
-                {
-                    JOptionPane.showMessageDialog(null,  "Le format de la date de début de rencontre ou de la date de fin de reoncontre est invalide!\nVeuillez respecter le format JJ/MM/YYYY HH:MI", "Date de la rencontre invalide", JOptionPane.ERROR_MESSAGE);
+                else {
+                    String message = "Impossible d'enregistrer cette rencontre! Aucune équipe locale ou visiteuse n'appartient à la catégorie " + cbBox_CategorieEquipe.getSelectedItem();
+                    JOptionPane.showMessageDialog(null, message, "Impossible d'enregistrer la rencontre", JOptionPane.ERROR_MESSAGE);
                 }
             }
             else
@@ -145,109 +248,129 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
                 else {
                     message = "Veuillez d'abord encoder les joueurs pariticpant à la rencontre avant d'enregistrer la rencontre.";
                 }
-                JOptionPane.showMessageDialog(null, message);
+                JOptionPane.showMessageDialog(null, message, "Impossible d'enregistrer la rencontre", JOptionPane.ERROR_MESSAGE);
             }
         }
 
         if(e.getSource() == buttonEncoderJoueurs)
         {
-            ArrayList<String> listeJoueursDispoToString = new ArrayList<>();
-
-            for(int i=0; i < listeJoueursClub.size(); i++)
+            if(cbBox_EquipeLocale.getItemCount() > 0 && cbBox_EquipeVisiteuse.getItemCount() > 0)
             {
-                Joueur j = listeJoueursClub.get(i);
-                String res = j.getNumRegistreNational() + "   |   " + j.getNom() + "  " + j.getPrenom();
-                listeJoueursDispoToString.add(res);
-            }
+                ArrayList<String> listeJoueursLocauxDispo, listeJoueursVisiteursDispo;
+                listeJoueursLocauxDispo = creeListeJoueursDisponibles(listeJoueursClub);
+                listeJoueursVisiteursDispo = creeListeJoueursDisponibles(listeJoueursAdverses);
 
-            DialogAjoutJoueursRencontre d;
-            int i = 0;
-            boolean cont = true;
-            do
-            {
-                d = new DialogAjoutJoueursRencontre(parent, true, listeJoueursDispoToString, true);
-                if(d.isOk())
+                if(listeJoueursLocauxDispo.size() >= 4 && listeJoueursVisiteursDispo.size() >= 4)
                 {
-                    String joueurSelectionne = d.getItemSelectionne();
-                    String numRegistreJoueurSelectionne = joueurSelectionne.substring(0, 15); //pour récupérer le numéro de registre du joueur qui vient d'être sélectionné.
-
-                    boolean found = false;
-                    Joueur j;
-
-                    for(int k=0; k < listeJoueursClub.size() && !found; k++)
+                    DialogAjoutJoueursRencontre d;
+                    int i = 0;
+                    boolean cont = true;
+                    do
                     {
-                        j = listeJoueursClub.get(k);
-                        if(numRegistreJoueurSelectionne.equals(j.getNumRegistreNational()))
+                        d = new DialogAjoutJoueursRencontre(parent, true, listeJoueursLocauxDispo, true);
+                        if(d.isOk())
                         {
-                            found = true;
-                            joueursLocauxSelectionnes[i] = j;
-                            listeJoueursDispoToString.remove(joueurSelectionne);
+                            String joueurSelectionne = d.getItemSelectionne();
+                            String numRegistreJoueurSelectionne = joueurSelectionne.substring(0, 15); //pour récupérer le numéro de registre du joueur qui vient d'être sélectionné.
+
+                            boolean found = false;
+                            Joueur j;
+
+                            for(int k=0; k < listeJoueursClub.size() && !found; k++)
+                            {
+                                j = listeJoueursClub.get(k);
+                                if(numRegistreJoueurSelectionne.equals(j.getNumRegistreNational()))
+                                {
+                                    found = true;
+                                    joueursLocauxSelectionnes[i] = j;
+                                    listeJoueursLocauxDispo.remove(joueurSelectionne);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //l'utilisateur appuie sur le bouton annuler
+                            cont = false;
+                            for(int j=0; j<4; j++) {
+                                joueursLocauxSelectionnes[j] = null;
+                            }
+                        }
+                        d.dispose();
+                        i++;
+                    }while(i < 4 && cont == true);
+
+
+                    if(cont == true) //Si l'utilisateur n'a pas appuyé sur le bouton annuler une seule fois...alors on continue en sélectionnant les joueurs adverses.
+                    {
+                        i = 0;
+                        do
+                        {
+                            d = new DialogAjoutJoueursRencontre(parent, true, listeJoueursVisiteursDispo, false);
+                            if(d.isOk())
+                            {
+                                String joueurSelectionne = d.getItemSelectionne();
+                                String numRegistreJoueurSelectionne = joueurSelectionne.substring(0, 15); //pour récupérer le numéro de registre du joueur qui vient d'être sélectionné.
+
+                                boolean found = false;
+                                Joueur j;
+
+                                for(int k=0; k < listeJoueursAdverses.size() && !found; k++)
+                                {
+                                    j = listeJoueursAdverses.get(k);
+                                    if(numRegistreJoueurSelectionne.equals(j.getNumRegistreNational()))
+                                    {
+                                        found = true;
+                                        joueursVisiteursSelectionnes[i] = j;
+                                        listeJoueursVisiteursDispo.remove(joueurSelectionne);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                cont = false;
+                                for(int j=0; j<4; j++) {
+                                    joueursVisiteursSelectionnes[j] = null;
+                                }
+                            }
+                            d.dispose();
+                            i++;
+                        }while(i < 4 && cont == true);
+
+                        if(cont == true)
+                        {
+                            isButtonEncoderJoueursClicked = true;
                         }
                     }
                 }
                 else
                 {
-                    //l'utilisateur appuie sur le bouton annuler
-                    cont = false;
-                    for(int j=0; j<4; j++) {
-                        joueursLocauxSelectionnes[j] = null;
+                    String message;
+                    String debutMsg;
+
+                    String categorie = (String) cbBox_CategorieEquipe.getSelectedItem();
+                    if(categorie.equals("Hommes")) {
+                        debutMsg = "Le nombre d'hommes";
                     }
-                }
-                d.dispose();
-                i++;
-            }while(i < 4 && cont == true);
-
-
-            if(cont == true) //Si l'utilisateur n'a pas appuyé sur le bouton annuler une seule fois...alors on continue simplement.
-            {
-                //Maintenant on gère la sélection/encodage des joueurs adverses pour la rencontre
-                listeJoueursDispoToString = new ArrayList<String>();
-
-                for(i=0; i < listeJoueursAdverses.size(); i++)
-                {
-                    Joueur j = listeJoueursAdverses.get(i);
-                    String res = j.getNumRegistreNational() + "   |   " + j.getNom() + "  " + j.getPrenom();
-                    listeJoueursDispoToString.add(res);
-                }
-
-                i = 0;
-                do
-                {
-                    d = new DialogAjoutJoueursRencontre(parent, true, listeJoueursDispoToString, false);
-                    if(d.isOk())
-                    {
-                        String joueurSelectionne = d.getItemSelectionne();
-                        String numRegistreJoueurSelectionne = joueurSelectionne.substring(0, 15); //pour récupérer le numéro de registre du joueur qui vient d'être sélectionné.
-
-                        boolean found = false;
-                        Joueur j;
-
-                        for(int k=0; k < listeJoueursAdverses.size() && !found; k++)
-                        {
-                            j = listeJoueursAdverses.get(k);
-                            if(numRegistreJoueurSelectionne.equals(j.getNumRegistreNational()))
-                            {
-                                found = true;
-                                joueursVisiteursSelectionnes[i] = j;
-                                listeJoueursDispoToString.remove(joueurSelectionne);
-                            }
-                        }
+                    else {
+                        debutMsg = "Le nombre de femmes";
                     }
-                    else
-                    {
-                        cont = false;
-                        for(int j=0; j<4; j++) {
-                            joueursVisiteursSelectionnes[j] = null;
-                        }
-                    }
-                    d.dispose();
-                    i++;
-                }while(i < 4 && cont == true);
 
-                if(cont == true)
-                {
-                    isButtonEncoderJoueursClicked = true;
+                    if(listeJoueursLocauxDispo.size() < 4 && listeJoueursVisiteursDispo.size() < 4) {
+                        message = debutMsg + " dans les joueuses du club et dans les joueuses adverses est insuffisant!\nVous devez disposer de 4 joueurs du même sexe au minimum.";
+                    }
+                    else if(listeJoueursLocauxDispo.size() < 4) {
+                        message = debutMsg + " dans les joueurs du club est insuffisant! Vous devez disposer de 4 joueurs du même sexe au minimum.";
+                    }
+                    else {
+                        message = debutMsg + " dans les joueurs adverses est insuffisant! Vous devez dispoer de 4 joueurs du même sexe au minimum.";
+                    }
+
+                    JOptionPane.showMessageDialog(null, message, "Encodage des joueurs impossible",JOptionPane.ERROR_MESSAGE);
                 }
+            }
+            else {
+                String message = "Impossible d'encoder les joueurs participant a la rencontre! Aucune équipe locale ou visiteuse n'appartient à la catégorie " + cbBox_CategorieEquipe.getSelectedItem();
+                JOptionPane.showMessageDialog(null, message);
             }
         }
 
@@ -294,7 +417,7 @@ public class DialogAjouteRencontre extends JDialog implements ActionListener
                 }
 
             }
-            else JOptionPane.showMessageDialog(null, "Vous devez d'abord enregistrer les joueurs participant à la rencontre avant\nd'enregistrer les résultats des différents matchs!");
+            else JOptionPane.showMessageDialog(null, "Vous devez d'abord enregistrer les joueurs participant à la rencontre avant\nd'enregistrer les résultats des différents matchs!", "Impossible d'encoder les résultats de matchs", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

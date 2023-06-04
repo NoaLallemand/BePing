@@ -137,7 +137,6 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         if(d.isOk())
         {
             Staff s = d.getMembreStaff();
-            //singleton.getListeStaffClub().add(s);
             singleton.ajouteStaff(s);
 
             JTable t = mainView.getViewMembres().getTableStaff();
@@ -159,23 +158,9 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
             if(d.isOk())
             {
                 Staff staffModif = d.getMembreStaff();
-                try
-                {
-                    s.setNom(staffModif.getNom());
-                    s.setPrenom(staffModif.getPrenom());
-                    s.setDateNaissance(staffModif.getDateNaissance());
-                    s.setNumRegistreNational(staffModif.getNumRegistreNational());
-                    s.setAdresse(staffModif.getAdresse());
-                    s.setSexe(staffModif.getSexe());
-                    s.setRole(staffModif.getRole());
-                }
-                catch(Exception ex)
-                {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
+                singleton.modifierStaff(s, staffModif);
 
                 ((AbstractTableModel)(refTableStaff.getModel())).fireTableRowsUpdated(indexSelectedRow, indexSelectedRow);
-
                 singleton.setStateRecordedData(false);
             }
             d.dispose();
@@ -193,8 +178,9 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
 
         if( ((indexSelectedRow = refTableS.getSelectedRow()) != -1) && (refTableS.getRowCount() > 0) )
         {
-            singleton.getListeStaffClub().remove(indexSelectedRow);
-            mainView.repaint();
+            singleton.supprimeStaff(indexSelectedRow);
+            refTableS.repaint();
+
             singleton.setStateRecordedData(false);
             //((AbstractTableModel)refTableS.getModel()).fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
         }
@@ -209,10 +195,7 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
         if(d.isOk())
         {
             Joueur j = d.getNouveauJoueur();
-
-            //singleton.getListeJoueursClub().add(j);
             singleton.ajouteJoueur(j);
-
 
             JTable t = mainView.getViewMembres().getTableJoueurs();
             ((AbstractTableModel)(t.getModel())).fireTableRowsInserted(t.getRowCount()-1, t.getRowCount()-1);
@@ -255,8 +238,9 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
 
         if( ((indexSelectedRow = refTableJ.getSelectedRow()) != -1) && (refTableJ.getRowCount() > 0) )
         {
-            singleton.getListeJoueursClub().remove(indexSelectedRow);
-            mainView.repaint();
+            singleton.supprimeJoueur(indexSelectedRow);
+            refTableJ.repaint();
+
             singleton.setStateRecordedData(false);
             //((AbstractTableModel)refTableJ.getModel()).fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
 
@@ -297,7 +281,6 @@ public class Controleur extends WindowAdapter implements ActionListener, ListSel
             if(d.isOk())
             {
                 Rencontre r = d.getNouvelleRencontre();
-                //singleton.getListeRencontres().add(r);
                 singleton.ajouteRencontre(r);
                 System.out.println("Affichage de la nouvelle rencontre:\n" + r.toString());
 

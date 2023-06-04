@@ -17,7 +17,6 @@ import View.JTableModel.StaffJTableModel;
 public class ViewMembres
 {
     private JPanel MembresPanel;
-    private JScrollBar scrollBar_PaneAffJoueurs;
     private JTable tableJoueurs;
     private JTable tableStaff;
     private JButton ajouterJoueurButton;
@@ -34,10 +33,6 @@ public class ViewMembres
     private JTextField textField_Classement;
     private JTextField textField_Sexe;
     private JTextField textField_LForce;
-    private JTextField textField_Salaire;
-    private JTextField textField_DateDebut;
-    private JTextField textField_DateFin;
-    private JPanel JPanel_infosContrat;
 
     public ViewMembres()
     {

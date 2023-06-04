@@ -65,8 +65,8 @@ public class Rencontre implements Serializable
         Date dFin = dateFin.getTime();
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.FRANCE);
         return "Rencontre" +
-                "\n{locaux='" + locaux + '\'' +
-                "\nvisiteurs='" + visiteurs + '\'' +
+                "\n{locaux='" + locaux.getNomEquipe() + '\'' +
+                "\nvisiteurs='" + visiteurs.getNomEquipe() + '\'' +
                 "\ndateDebut='" + df.format(dDebut) + '\'' +
                 "\ndateFin='" + df.format(dFin) + '\'' +
                 "\nresultat='" + resultat.toString() + '\'' + '}';

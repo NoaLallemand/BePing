@@ -49,13 +49,13 @@ public class Club implements Serializable
 
         mailingListLogListeners = new ArrayList<>();
 
-        listeEquipesClub.add(new Equipe(1, "Les fumiers", 2, "Liège", "Homme"));
-        listeEquipesClub.add(new Equipe(2, "Les handicapés", 3, "Namur", "Femme"));
-        listeEquipesClub.add(new Equipe(3, "Les zinzins", 1, "Liège", "Vétéran"));
+        listeEquipesClub.add(new Equipe(1, "Les fumiers", 2, "Liège", "Hommes"));
+        listeEquipesClub.add(new Equipe(2, "Les handicapés", 3, "Namur", "Femmes"));
+        listeEquipesClub.add(new Equipe(3, "Les zinzins", 1, "Liège", "Vétérans"));
 
-        listeEquipesAdverses.add(new Equipe(4, "Les Sylvatiens", 5, "Luxembourg", "Femme"));
-        listeEquipesAdverses.add(new Equipe(5, "Les Blegnytois", 1, "Liège", "Homme"));
-        listeEquipesAdverses.add(new Equipe(6, "Les Noa", 2, "Cheratte", "Vétéran"));
+        listeEquipesAdverses.add(new Equipe(4, "Les Sylvatiens", 5, "Luxembourg", "Femmes"));
+        listeEquipesAdverses.add(new Equipe(5, "Les Blegnytois", 1, "Liège", "Hommes"));
+        listeEquipesAdverses.add(new Equipe(6, "Les Noa", 2, "Cheratte", "Vétérans"));
     }
 
     public void ajouteJoueur(Joueur j)
@@ -82,14 +82,49 @@ public class Club implements Serializable
         }
         catch(Exception e)
         {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            System.out.println("Erreur lors de la tentative de mise à jour des données d'un joueur");
         }
+    }
+
+    public void supprimeJoueur(int indice)
+    {
+        Joueur j = listeJoueursClub.get(indice);
+        notifyLogDetected("Suppression d'un joueur: ", j);
+        listeJoueursClub.remove(indice);
     }
 
     public void ajouteStaff(Staff s)
     {
         listeStaffClub.add(s);
         notifyLogDetected("Ajout d'un staff: ", s);
+    }
+
+    public void modifierStaff(Staff ancien, Staff nouveau)
+    {
+        notifyLogDetected("Modification membre staff - anciennes données: ", ancien);
+        notifyLogDetected("Modification membre staff - nouvelles données: ", nouveau);
+
+        try
+        {
+            ancien.setNom(nouveau.getNom());
+            ancien.setPrenom(nouveau.getPrenom());
+            ancien.setDateNaissance(nouveau.getDateNaissance());
+            ancien.setNumRegistreNational(nouveau.getNumRegistreNational());
+            ancien.setAdresse(nouveau.getAdresse());
+            ancien.setSexe(nouveau.getSexe());
+            ancien.setRole(nouveau.getRole());
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Erreur lors de la tentative de mise à jour des données d'un membre du staff");
+        }
+    }
+
+    public void supprimeStaff(int indice)
+    {
+        Staff s = listeStaffClub.get(indice);
+        notifyLogDetected("Suppression membre staff: ", s);
+        listeStaffClub.remove(indice);
     }
 
     public void ajouteRencontre(Rencontre r)
