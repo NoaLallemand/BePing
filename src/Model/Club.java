@@ -48,22 +48,6 @@ public class Club implements Serializable
         stateRecordedData = true;
 
         mailingListLogListeners = new ArrayList<>();
-
-        /*listeEquipesClub.add(new Equipe(1, "Les fumiers", 2, "Liège", "Hommes"));
-        listeEquipesClub.add(new Equipe(2, "Les handicapés", 3, "Namur", "Femmes"));
-        listeEquipesClub.add(new Equipe(3, "Les zinzins", 1, "Liège", "Vétérans"));*/
-
-        /*try
-        {
-            listeEquipesAdverses.add(new Equipe(4, "Les Sylvatiens", 5, "Luxembourg", "Femme"));
-            listeEquipesAdverses.add(new Equipe(5, "Les Blegnytois", 1, "Liège", "Homme"));
-            listeEquipesAdverses.add(new Equipe(6, "Les Noa", 2, "Cheratte", "Vétéran"));
-        }
-        catch(Exception e)
-        {
-            System.out.println("Erreur");
-        }*/
-
     }
 
     public void ajouteJoueur(Joueur j)
