@@ -13,6 +13,15 @@ public class Equipe implements Serializable
     private  String region;
     private  String categorie;
 
+    public Equipe()
+    {
+        numEquipe = 0;
+        nomEquipe = "";
+        division = 0;
+        region = "";
+        categorie = "";
+    }
+
     public Equipe(int numEquipe ,String nomEquipe, int division, String region, String categorie) throws Exception
     {
         try

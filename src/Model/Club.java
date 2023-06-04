@@ -53,9 +53,17 @@ public class Club implements Serializable
         listeEquipesClub.add(new Equipe(2, "Les handicapés", 3, "Namur", "Femmes"));
         listeEquipesClub.add(new Equipe(3, "Les zinzins", 1, "Liège", "Vétérans"));*/
 
-        /*listeEquipesAdverses.add(new Equipe(4, "Les Sylvatiens", 5, "Luxembourg", "Femme"));
-        listeEquipesAdverses.add(new Equipe(5, "Les Blegnytois", 1, "Liège", "Homme"));
-        listeEquipesAdverses.add(new Equipe(6, "Les Noa", 2, "Cheratte", "Vétéran"));*/
+        /*try
+        {
+            listeEquipesAdverses.add(new Equipe(4, "Les Sylvatiens", 5, "Luxembourg", "Femme"));
+            listeEquipesAdverses.add(new Equipe(5, "Les Blegnytois", 1, "Liège", "Homme"));
+            listeEquipesAdverses.add(new Equipe(6, "Les Noa", 2, "Cheratte", "Vétéran"));
+        }
+        catch(Exception e)
+        {
+            System.out.println("Erreur");
+        }*/
+
     }
 
     public void ajouteJoueur(Joueur j)
@@ -247,6 +255,37 @@ public class Club implements Serializable
         }
         br.close();
 
+
+        fr = new FileReader("dataEquipesAdverses.csv");
+        br = new BufferedReader(fr);
+        br.readLine();
+        Equipe e;
+        while( (tuple = br.readLine()) != null)
+        {
+            tokenizer = new StringTokenizer(tuple, ";");
+            e = new Equipe();
+
+            item = tokenizer.nextToken();
+            int numEquipe = Integer.parseInt(item);
+            e.setNumEquipe(numEquipe);
+
+            item = tokenizer.nextToken();
+            e.setNomEquipe(item);
+
+            item = tokenizer.nextToken();
+            int division = Integer.parseInt(item);
+            e.setDivision(division);
+
+            item = tokenizer.nextToken();
+            e.setRegion(item);
+
+            item = tokenizer.nextToken();
+            e.setCategorie(item);
+
+            listeEquipesAdverses.add(e);
+        }
+        br.close();
+
         try
         {
             Properties prop = new Properties();
@@ -254,7 +293,7 @@ public class Club implements Serializable
             String numEquipe = (String) prop.get("numEquipe");
             Equipe.numEquipeCourant = Integer.parseInt(numEquipe);
         }
-        catch(FileNotFoundException e)
+        catch(FileNotFoundException ex)
         {
             System.out.println("Le fichier properties n'existe pas pour l'instant...");
         }

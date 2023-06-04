@@ -7,6 +7,9 @@ import LogBean.RecepteurLog;
 import Model.*;
 import View.*;
 import Controler.*;
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -14,6 +17,8 @@ import javax.swing.table.AbstractTableModel;
 public class Main {
     public static void main(String[] args)
     {
+        FlatDarculaLaf.setup();
+
         try
         {
             Club.getClubInstance().Load();
