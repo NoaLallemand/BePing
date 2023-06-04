@@ -1,0 +1,21 @@
+﻿Nom;Prenom;DateNaissance;NumeroRegistreNational;Adresse;Sexe;Classement;ListeDeForce
+Martin;Clément;12-04-1989;89.04.12-665.12;Chaussée Reine Astrid 12, 1420 Braine-l'Alleud;Homme;E2;10
+Bernard;Marie;19-02-1974;74.02.19-123.85;Boulevard de l'Europe 45, 1420 Braine-l'Alleud;Femme;A4;2
+Petit;Audrey;1-01-1988;88.01.01-235.21;Rue des Vennes 122, 4020 Liège;Femme;E4;4
+Thomas;Pierre;25-08-1981;81.08.25-564.25;Thier de la Fontaine 24, 4000 Liège;Homme;C0;3
+Moreau;Sébastien;10-08-1982;82.08.10-325.14;Place Saint-Lambert 10, 4000 Liège;Homme;C6;18
+Dubois;Bastien;17-11-1986;86.11.17-456.28;Grand'Route 299, 4610 Beyne-Heusay;Homme;B4;4
+Richard;Dimitri;1-12-1970;70.12.01-235.21;Rue Vallée 62, 4051 Chaudfontaine;Homme;A6;8
+Robert;Alexia;20-02-1965;65.02.20-121.67;Rue Albert Dekkers 26, 4608 Dalhem;Femme;A0;10
+Durand;Rémy;25-05-1999;99.05.25-159.87;Rue Royale 30, 4690 Bassenge;Homme;E0;20
+Leroy;Thibault;23-06-1990;90.06.23-347.24;Route de Mortier 1A, 4606 Dalhem;Homme;D4;8
+Lefebvre;Floriane;20-01-1962;62.01.20-354.56;Rue Jacques Decortis 7, 4610 Beyne-Heusay;Femme;D6;12
+Girard;Etienne;29-10-1977;77.10.29-111.87;Avenue des Ardennes 37A, 4130 Esneux;Homme;D0;6
+David;Carole;16-07-1971;71.07.16-337.42;Avenue Reine-Elisabeth 32, 4020 Liège;Femme;C2;11
+Bertrand;Pauline;25-06-1978;78.06.25-354.22;Rue Chafnay 89, 4020 Liège;Femme;C2;4
+Morel;Kevin;11-09-1969;69.09.11-325.45;Rue du Hérou 41, 6660 Houffalize;Homme;B4;3
+Fournier;Romain;18-02-1994;94.02.18-557.26;Quai de la Boverie 81, 4020 Liège;Homme;B2;14
+Dupont;Julien;25-01-2006;06.01.25-123.58;Rue du Général-Bertrand 41, 4000 Liège;Homme;D6;11
+Henry;Antoine;21-09-2002;02.09.21-974.20;Rue du Vieux-Mayeur 13, 4000 Liège;Homme;E6;1
+Blanc;Cedric;20-02-1998;98.02.20-003.56;Rue de la Vesdre 21, 4032 Liège;Homme;E0;2
+Lemoine;Camille;21-06-2001;01.06.21-872.35;Montagne Sainte-Walburge 144, 4000 Liège;Femme;A2;3

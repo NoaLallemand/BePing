@@ -14,6 +14,16 @@ public class Personne implements Serializable
     protected String adresse;
     protected String sexe;
 
+    public Personne()
+    {
+        numRegistreNational = "";
+        nom = "";
+        prenom = "";
+        dateNaissance = new GregorianCalendar();
+        adresse = "";
+        sexe = "";
+    }
+
     public Personne(String numRegistreNational, String nom, String prenom, GregorianCalendar dateNaissance, String adresse, String sexe) throws Exception
     {
         try

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cee902d3-ea78-44d8-bfd4-cd6a2c69a84e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/out/production/BePing/Controler/Controleur.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BePing/Controler/Controleur.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BePing/Model/Club.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BePing/Model/Club.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BePing/View/DialogAjoutJoueursRencontre.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BePing/View/DialogAjoutJoueursRencontre.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BePing/View/DialogAjouteRencontre.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BePing/View/DialogAjouteRencontre.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BePing/View/JTableModel/StaffJTableModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BePing/View/JTableModel/StaffJTableModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BePing/View/ViewEquipes.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BePing/View/ViewEquipes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controler/Controleur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controler/Controleur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Club.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Club.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/DialogAjoutJoueursRencontre.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/DialogAjoutJoueursRencontre.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/DialogAjoutJoueursRencontre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/DialogAjoutJoueursRencontre.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/DialogAjouteRencontre.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/DialogAjouteRencontre.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/DialogAjouteRencontre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/DialogAjouteRencontre.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/JTableModel/StaffJTableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/JTableModel/StaffJTableModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/ViewEquipes.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/ViewEquipes.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/ViewEquipes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/ViewEquipes.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2OjvspZzawerFg1qPwa36m474PF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;158&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;239&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/utilisateur/OneDrive/Cours informatique/Bloc 2/Quadri 2/Java/Laboratoire/JavaProjetRestaurant&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="Model" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="DialogAjouteStaff" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="View.DialogAjouteStaff" />
+      <module name="BePing" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="View.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Joueur" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Model.Joueur" />
+      <module name="BePing" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="BePing" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewEquipes" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="View.ViewEquipes" />
+      <module name="BePing" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="View.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewMembres" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="View.ViewMembres" />
+      <module name="BePing" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="View.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.ViewMembres" />
+        <item itemvalue="Application.DialogAjouteStaff" />
+        <item itemvalue="Application.ViewEquipes" />
+        <item itemvalue="Application.Joueur" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cee902d3-ea78-44d8-bfd4-cd6a2c69a84e" name="Changes" comment="" />
+      <created>1682087020840</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682087020840</updated>
+      <workItem from="1682087022398" duration="3541000" />
+      <workItem from="1682248060798" duration="4875000" />
+      <workItem from="1682437309155" duration="5802000" />
+      <workItem from="1682446403071" duration="74000" />
+      <workItem from="1682446499657" duration="1147000" />
+      <workItem from="1682495041458" duration="15230000" />
+      <workItem from="1682525335563" duration="163000" />
+      <workItem from="1682525530768" duration="2918000" />
+      <workItem from="1682577018745" duration="700000" />
+      <workItem from="1682583055946" duration="792000" />
+      <workItem from="1683267770616" duration="8594000" />
+      <workItem from="1683285292224" duration="709000" />
+      <workItem from="1683293978325" duration="6575000" />
+      <workItem from="1683701660292" duration="25858000" />
+      <workItem from="1683784777806" duration="10186000" />
+      <workItem from="1683813604422" duration="4008000" />
+      <workItem from="1683821320937" duration="83000" />
+      <workItem from="1683821428190" duration="263000" />
+      <workItem from="1683840264411" duration="2612000" />
+      <workItem from="1683878838966" duration="4410000" />
+      <workItem from="1683899050433" duration="9140000" />
+      <workItem from="1684309492284" duration="281000" />
+      <workItem from="1684309800155" duration="1291000" />
+      <workItem from="1684311731438" duration="322000" />
+      <workItem from="1684312113656" duration="1594000" />
+      <workItem from="1684314501502" duration="2230000" />
+      <workItem from="1684324107188" duration="6008000" />
+      <workItem from="1684338068011" duration="4530000" />
+      <workItem from="1684346229818" duration="3462000" />
+      <workItem from="1684400681647" duration="7515000" />
+      <workItem from="1684409642650" duration="2493000" />
+      <workItem from="1684421800890" duration="9428000" />
+      <workItem from="1684485937046" duration="17782000" />
+      <workItem from="1684517274038" duration="86000" />
+      <workItem from="1684517377861" duration="2525000" />
+      <workItem from="1684563757719" duration="1808000" />
+      <workItem from="1684570058523" duration="7482000" />
+      <workItem from="1684579681709" duration="1560000" />
+      <workItem from="1684586989478" duration="1950000" />
+      <workItem from="1684593235756" duration="6185000" />
+      <workItem from="1684608892214" duration="1049000" />
+      <workItem from="1684614364152" duration="2019000" />
+      <workItem from="1684655159244" duration="963000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/BePing$Joueur.ic" NAME="Joueur Coverage Results" MODIFIED="1682089453192" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>Model.*</FILTER>
+    </SUITE>
+  </component>
+</project>

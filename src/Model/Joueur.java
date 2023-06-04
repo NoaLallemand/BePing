@@ -24,6 +24,13 @@ public class Joueur extends Personne
         return listeForce;
     }
 
+    public Joueur()
+    {
+        super();
+        classement = "";
+        listeForce = 0;
+    }
+
     public Joueur(String numRegistreNational, String nom, String prenom, GregorianCalendar dateNaissance, String adresse, String sexe, String classement, int listeForce) throws Exception
     {
         super(numRegistreNational, nom, prenom, dateNaissance, adresse, sexe);

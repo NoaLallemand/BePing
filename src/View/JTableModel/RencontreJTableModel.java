@@ -1,19 +1,20 @@
 package View.JTableModel;
 
-import javax.swing.table.AbstractTableModel;
-import Model.Staff;
+import Model.Joueur;
+import Model.Rencontre;
 
+import javax.swing.table.AbstractTableModel;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class StaffJTableModel extends AbstractTableModel
+public class RencontreJTableModel extends AbstractTableModel
 {
-    private String[] columnNames = {"Num. Registre National", "Nom", "Prénom", "Date de naissance", "Sexe", "Role"};
-    private ArrayList<Staff> data;
+    private String[] columnNames = {"Equipe Locale", "Equipe Visisteuse", "Début de la rencontre"};
+    private ArrayList<Rencontre> data;
 
-    public StaffJTableModel(ArrayList<Staff> data)
+    public RencontreJTableModel(ArrayList<Rencontre> data)
     {
         this.data = data;
     }
@@ -27,30 +28,21 @@ public class StaffJTableModel extends AbstractTableModel
     @Override
     public Object getValueAt(int l, int c)
     {
-        Staff s = data.get(l);
+        Rencontre r = data.get(l);
 
         switch(c)
         {
             case 0:
-                return s.getNumRegistreNational();
+                return r.getLocaux().getNomEquipe();
 
             case 1:
-                return s.getNom();
+                return r.getVisiteurs().getNomEquipe();
 
             case 2:
-                return s.getPrenom();
-
-            case 3:
-                Date d = s.getDateNaissance().getTime();
-                DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRANCE);
+                Date d = r.getDateDebut().getTime();
+                DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.FRANCE);
                 String dateFormatee = df.format(d);
                 return dateFormatee;
-
-            case 4:
-                return s.getSexe();
-
-            case 5:
-                return s.getRole();
 
             default:
                 return null;
